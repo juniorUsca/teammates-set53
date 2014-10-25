@@ -44,6 +44,47 @@
 
         <jsp:include page="<%=Const.ViewURIs.STATUS_MESSAGE%>" />
         <br>
+        
+        <!-- <div class="well well-plain">
+            <div class="row">
+                <div class="col-md-12">
+                    <form method="get" action="#" name="search_form">
+                        <div class="row">
+                            <div class="col-md-10">
+                                <div class="form-group">
+                                    <input type="text" id="searchbox"
+                                        class="form-control"
+                                        data-toggle="tooltip"
+                                        data-placement="top"
+                                        placeholder="e.g. Charles Shultz">
+                                </div>
+                            </div>
+                            <div class="col-md-2 nav">
+                                <div class="form-group">
+                                    <button id="buttonSearch" class="btn btn-primary" type="submit" value="Search">
+                                        <span class="glyphicon glyphicon-search"></span> Find students
+                                    </button>
+                                </div>
+                            </div>
+                        </div> -->
+                        <!-- <input type="hidden" name="<%=Const.ParamsNames.SEARCH_STUDENTS%>" value="true">
+                        <input type="hidden" name="<%=Const.ParamsNames.SEARCH_COMMENTS_FOR_STUDENTS%>" value="false">
+                        <input type="hidden" name="<%=Const.ParamsNames.SEARCH_COMMENTS_FOR_RESPONSES%>" value="false">
+                        <input type="hidden" name="<%=Const.ParamsNames.USER_ID%>" value="<%=data.account.googleId%>"> -->
+                    <!-- </form>
+                </div>
+            </div>
+        </div> -->
+        <!-- <div class="well well-plain"> -->
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="checkbox">
+                        <input id="displayArchivedData_check" type="checkbox" <%if(data.displayArchive){%>checked="checked"<%}%>>
+                        <label for="displayArchivedData_check">Display archived data</label>
+                    </div>
+                </div>
+            </div>
+        <!-- </div> -->
 
         <%
             int courseIdx = -1;
@@ -80,6 +121,7 @@
                     <%
                         for (EvaluationDetailsBundle edd : courseDetails.evaluations) {
                             sessionIdx++;
+                            if(data.displayArchive){
                     %>
                             <tr id="evaluation<%=sessionIdx%>">
                                 <td><%=PageData.sanitizeForHtml(edd.evaluation.name)%></td>
@@ -94,9 +136,28 @@
                                 </td>
                             </tr>
                     <%
+                            } else {
+                                if(data.getStudentStatusForEval(edd.evaluation)=="Pending" || data.getStudentStatusForEval(edd.evaluation)=="Submitted"){
+                    %>
+                                <tr id="evaluation<%=sessionIdx%>">
+                                <td><%=PageData.sanitizeForHtml(edd.evaluation.name)%></td>
+                                <td><%=TimeHelper.formatTime(edd.evaluation.endTime)%></td>
+                                <td><span data-toggle="tooltip" data-placement="top" 
+                                    title="<%=data.getStudentHoverMessageForEval(data.getStudentStatusForEval(edd.evaluation))%>">
+                                    <%=data.getStudentStatusForEval(edd.evaluation)%>
+                                    </span>
+                                </td>
+                                <td class="studentHomeActions">
+                                    <%=data.getStudentEvaluationActions(edd.evaluation,sessionIdx)%>
+                                </td>
+                            </tr>
+                        <%
+                                }
+                            }
                         }
                             for (FeedbackSessionDetailsBundle fsd : courseDetails.feedbackSessions) {
                                 sessionIdx++;
+                                if(data.displayArchive){
                         %>
                                 <tr class="home_evaluations_row" id="evaluation<%=sessionIdx%>">
                                     <td><%=PageData.sanitizeForHtml(fsd.feedbackSession.feedbackSessionName)%></td>
@@ -105,11 +166,30 @@
                                             title="<%=data.getStudentHoverMessageForSession(fsd.feedbackSession)%>">
                                             <%=data.getStudentStatusForSession(fsd.feedbackSession)%>
                                         </span>
+                                        
                                     </td>
                                     <td class="studentHomeActions"><%=data.getStudentFeedbackSessionActions(fsd.feedbackSession,sessionIdx)%>
                                     </td>
                                 </tr>
                         <%
+                                } else{
+                                    if(data.getStudentStatusForSession(fsd.feedbackSession)=="Pending" || data.getStudentStatusForSession(fsd.feedbackSession)=="Submitted"){
+                        %>
+                                    <tr class="home_evaluations_row" id="evaluation<%=sessionIdx%>">
+                                        <td><%=PageData.sanitizeForHtml(fsd.feedbackSession.feedbackSessionName)%></td>
+                                        <td><%=TimeHelper.formatTime(fsd.feedbackSession.endTime)%></td>
+                                        <td><span data-toggle="tooltip" data-placement="top" 
+                                                title="<%=data.getStudentHoverMessageForSession(fsd.feedbackSession)%>">
+                                                <%=data.getStudentStatusForSession(fsd.feedbackSession)%>
+                                            </span>
+                                            
+                                        </td>
+                                        <td class="studentHomeActions"><%=data.getStudentFeedbackSessionActions(fsd.feedbackSession,sessionIdx)%>
+                                        </td>
+                                    </tr>
+                    <%
+                                    }
+                                }
                             }
                         } else {
                     %>

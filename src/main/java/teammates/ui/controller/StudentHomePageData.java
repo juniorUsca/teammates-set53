@@ -22,6 +22,7 @@ public class StudentHomePageData extends PageData {
     public Map<String, String> evalSubmissionStatusMap = new HashMap<String, String>();
     public Map<String, Boolean> sessionSubmissionStatusMap = new HashMap<String, Boolean>();
     public String eventualConsistencyCourse;
+    public Boolean displayArchive;
     
     /**
      * Returns the submission status of the student for a given evaluation.

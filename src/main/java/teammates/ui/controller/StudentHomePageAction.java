@@ -28,6 +28,7 @@ public class StudentHomePageAction extends Action {
         new GateKeeper().verifyLoggedInUserPrivileges();
         
         data = new StudentHomePageData(account);
+        Boolean displayArchive = getRequestParamAsBoolean(Const.ParamsNames.DISPLAY_ARCHIVE);
         String recentlyJoinedCourseId = getRequestParamValue(Const.ParamsNames.CHECK_PERSISTENCE_COURSE);
         
         
@@ -59,6 +60,7 @@ public class StudentHomePageAction extends Action {
                 statusToAdmin = Const.ACTION_RESULT_FAILURE + " :" + e.getMessage();
             }
         } 
+        data.displayArchive = displayArchive;
         
         ShowPageResult response = createShowPageResult(Const.ViewURIs.STUDENT_HOME, data);
         
