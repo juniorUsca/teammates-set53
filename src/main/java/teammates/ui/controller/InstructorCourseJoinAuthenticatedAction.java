@@ -1,5 +1,10 @@
 package teammates.ui.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.util.List;
+
+import javax.jdo.PersistenceManager;
+
 import teammates.common.datatransfer.InstructorAttributes;
 import teammates.common.exception.EntityDoesNotExistException;
 import teammates.common.exception.InvalidParametersException;
@@ -8,6 +13,11 @@ import teammates.common.util.Assumption;
 import teammates.common.util.Const;
 import teammates.common.util.StringHelper;
 import teammates.logic.api.GateKeeper;
+import teammates.logic.automated.SimpleEmailAutoJoin;
+import teammates.storage.datastore.Datastore;
+import teammates.storage.entity.Instructor;
+
+import javax.jdo.Query;
 
 /**
  * This action handles instructors who attempt to join a course after
@@ -17,6 +27,7 @@ import teammates.logic.api.GateKeeper;
  */
 public class InstructorCourseJoinAuthenticatedAction extends Action {
     
+    public List<Instructor> dato_instructor;
     @Override
     protected ActionResult execute() throws EntityDoesNotExistException {
         Assumption.assertNotNull(regkey);
@@ -54,10 +65,22 @@ public class InstructorCourseJoinAuthenticatedAction extends Action {
         /* Create redirection to instructor's homepage */
         RedirectResult response = createRedirectResult(Const.ActionURIs.INSTRUCTOR_HOME_PAGE);
         InstructorAttributes instructor  = logic.getInstructorForRegistrationKey(regkey);
+        
+        //Modificacion - Enviar un mensaje al Admin de Aceptar ser un instructor
+        SimpleEmailAutoJoin mail=new SimpleEmailAutoJoin(account.googleId);
+        try {
+            mail.sendEmail_Instructor();
+        } catch (UnsupportedEncodingException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        
         if(instructor != null) {
             response.addResponseParam(Const.ParamsNames.CHECK_PERSISTENCE_COURSE, instructor.courseId);    
         }
         
         return response;
     }
+    
+    
 }

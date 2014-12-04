@@ -31,7 +31,7 @@ public class InstructorFeedbackAddAction extends InstructorFeedbacksPageAction {
         
         String courseId = getRequestParamValue(Const.ParamsNames.COURSE_ID);
         
-        Assumption.assertPostParamNotNull(Const.ParamsNames.COURSE_ID, courseId);
+        Assumption.assertNotNull(courseId);
         
         InstructorAttributes instructor = logic.getInstructorForGoogleId(courseId, account.googleId); 
         

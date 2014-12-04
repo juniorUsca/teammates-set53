@@ -1,5 +1,7 @@
 package teammates.ui.controller;
 
+
+
 import teammates.common.datatransfer.InstructorAttributes;
 import teammates.common.exception.EntityDoesNotExistException;
 import teammates.common.util.Assumption;
@@ -29,6 +31,7 @@ public class InstructorCourseJoinAction extends Action {
 
         new GateKeeper().verifyLoggedInUserPrivileges();
         
+        
         /* Process confirmation for instructor if needed and setup status to be shown to admin */
         statusToAdmin = "Action Instructor Clicked Join Link"
                         + "<br/>Google ID: " + account.googleId
@@ -36,6 +39,8 @@ public class InstructorCourseJoinAction extends Action {
         
         InstructorAttributes instructor = logic.getInstructorForRegistrationKey(regkey);
 
+        
+        
         if (instructor != null && instructor.isRegistered()) {
             // Bypass confirmation if instructor is already registered
             String redirectUrl = Url.addParamToUrl(Const.ActionURIs.INSTRUCTOR_COURSE_JOIN_AUTHENTICATED,

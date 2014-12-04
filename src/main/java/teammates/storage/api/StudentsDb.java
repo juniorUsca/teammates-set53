@@ -81,9 +81,7 @@ public class StudentsDb extends EntitiesDb {
     public void deleteDocument(StudentAttributes studentToDelete){
         if(studentToDelete.key == null){
             StudentAttributes student = getStudentForEmail(studentToDelete.course, studentToDelete.email);
-            if (student != null) {
-                deleteDocument(Const.SearchIndex.STUDENT, student.key);
-            }
+            deleteDocument(Const.SearchIndex.STUDENT, student.key);
         } else {
             deleteDocument(Const.SearchIndex.STUDENT, studentToDelete.key);
         }
@@ -116,7 +114,7 @@ public class StudentsDb extends EntitiesDb {
 
     public void createStudent(StudentAttributes student, boolean hasDocument)
             throws InvalidParametersException, EntityAlreadyExistsException {
-        StudentAttributes createdStudent = new StudentAttributes((Student)createEntity(student));
+        StudentAttributes createdStudent = (StudentAttributes) createEntity(student);
         if (hasDocument) {
             putDocument(createdStudent);
         }

@@ -1,5 +1,5 @@
-<%@ page import="teammates.ui.controller.PageData" %>
-<%@ page import="teammates.common.util.Const" %>
+<%@ page import="teammates.ui.controller.PageData"%>
+<%@ page import="teammates.common.util.Const"%>
 <%
     boolean isError = Boolean.parseBoolean((String)request.getAttribute(Const.ParamsNames.ERROR));
 %>
@@ -9,13 +9,13 @@
 <%
     if(!statusMessage.isEmpty()) {
 %>
-    <div id="statusMessage"
-        <%if(isError) out.print(" class=\"alert alert-danger\""); else out.print(" class=\"alert alert-warning\"");%>>
-        <%=statusMessage%>
-    </div>
-    <script type="text/javascript">
-        document.getElementById( 'statusMessage' ).scrollIntoView();
+<div id="statusMessage"
+	<%if(isError) out.print(" class=\"alert alert-danger\""); else out.print(" class=\"alert alert-warning\"");%>>
+	<%=statusMessage%>
+</div>
+<script type="text/javascript">
+       document.getElementById( 'statusMessage' ).scrollIntoView();
     </script>
 <%    } else { %>
-    <div id="statusMessage" style="display: none;"></div>
+<div id="statusMessage" style="display: none;"></div>
 <%    } %>

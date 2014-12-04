@@ -82,7 +82,7 @@ public class InstructorCourseEditPage extends AppPage {
     }
 
     public void editInstructor(String id, String name, String email) {
-        clickEditInstructorLink(1);
+        clickEditInstructorLink();
         
         editInstructorName(name);
         editInstructorEmail(email);
@@ -118,29 +118,12 @@ public class InstructorCourseEditPage extends AppPage {
         return getTextBoxValue(instructorEmailTextBox);
     }
     
-    public boolean clickEditInstructorLink(int instrNum) {
-        boolean isEditable;
-        if (instrNum == 1) {
-            editInstructorLink.click();
-            waitForElementVisible(saveInstructorButton);
-            isEditable = editInstructorNameTextBox.isEnabled()
-                        && editInstructorEmailTextBox.isEnabled()
-                        && saveInstructorButton.isDisplayed();
-        } else {
-            String instructorNum = String.valueOf(instrNum);
-            WebElement editLink = browser.driver.findElement(By.id("instrEditLink" + instructorNum));
-            editLink.click();
-            
-            WebElement saveButton = browser.driver.findElement(By.id("btnSaveInstructor" + instructorNum));
-            waitForElementVisible(saveButton);
-            
-            WebElement editInstructorNameTextBox = browser.driver.findElement(By.id("instructorname" + instructorNum));
-            WebElement editInstructorEmailTextBox = browser.driver.findElement(By.id("instructoremail" + instructorNum));
-            
-            isEditable = editInstructorNameTextBox.isEnabled()
-                        && editInstructorEmailTextBox.isEnabled()
-                        && saveButton.isDisplayed();
-        }
+    public boolean clickEditInstructorLink() {
+        editInstructorLink.click();
+        waitForElementVisible(saveInstructorButton);
+        boolean isEditable = editInstructorNameTextBox.isEnabled()
+                            && editInstructorEmailTextBox.isEnabled()
+                            && saveInstructorButton.isDisplayed();
         
         return isEditable;
     }
@@ -273,14 +256,6 @@ public class InstructorCourseEditPage extends AppPage {
     
     public void clickDeleteInstructorLinkAndCancel() {
         clickAndCancel(deleteInstructorLink);
-    }
-    
-    
-    public WebElement getNameField(int instrNum) {
-        return browser.driver.findElement(By.id("instructorname" + String.valueOf(instrNum)));
-    }
-    public WebElement getEmailField(int instrNum) {
-        return browser.driver.findElement(By.id("instructoremail" + String.valueOf(instrNum)));
     }
 
 }

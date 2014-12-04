@@ -56,8 +56,8 @@ public class InstructorFeedbackResponseCommentsLoadAction extends Action {
                 logic.getFeedbackSessionResultsForInstructor(
                         fsname, courseId, instructor.email, roster, !IS_INCLUDE_RESPONSE_STATUS);
         if(bundle != null){
-            removeQuestionsAndResponsesIfNotAllowed(bundle);
             removeQuestionsAndResponsesWithoutFeedbackResponseComment(bundle);
+            removeQuestionsAndResponsesIfNotAllowed(bundle);
             if(bundle.questions.size() != 0){
                 feedbackResultBundles.put(fsname, bundle);
             }
@@ -65,6 +65,7 @@ public class InstructorFeedbackResponseCommentsLoadAction extends Action {
         return feedbackResultBundles;
     }
 
+    //TODO: update this part's logic, refer to issue #2368
     private void removeQuestionsAndResponsesIfNotAllowed(FeedbackSessionResultsBundle bundle) {
         Iterator<FeedbackResponseAttributes> iter = bundle.responses.iterator();
         while (iter.hasNext()) {

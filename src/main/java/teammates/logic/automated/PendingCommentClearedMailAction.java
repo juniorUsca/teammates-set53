@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import teammates.common.datatransfer.CommentSendingState;
 import teammates.common.exception.EntityDoesNotExistException;
 import teammates.common.util.Assumption;
-import teammates.common.util.Const;
 import teammates.common.util.HttpRequestHelper;
 import teammates.common.util.Const.ParamsNames;
 import teammates.logic.core.CommentsLogic;
@@ -77,7 +76,7 @@ public class PendingCommentClearedMailAction extends EmailAction {
     }
 
     private void initializeNameAndDescription() {
-        actionName = Const.AutomatedActionNames.AUTOMATED_PENDING_COMMENT_CLEARED_MAIL_ACTION;
+        actionName = "pendingCommentClearedMailAction";
         actionDescription = "clear pending comments";
     }
 }

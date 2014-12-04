@@ -30,8 +30,8 @@ import teammates.storage.search.CommentSearchDocument;
 import teammates.storage.search.CommentSearchQuery;
 
 /**
- * Handles CRUD Operations for {@link Comment}.
- * The API uses data transfer classes (i.e. *Attributes) instead of persistable classes.
+ * Maneja operaciones CRUD para {@link Comment}.
+ * La API utiliza clases de transferencia de datos (es decir, * Atributos) en lugar de las clases con persistencia.
  */
 public class CommentsDb extends EntitiesDb{
     
@@ -39,7 +39,7 @@ public class CommentsDb extends EntitiesDb{
     private static final Logger log = Utils.getLogger();
     
     /**
-     * This method is for testing only
+     * Este método es solo para probar
      * @param commentsToAdd
      * @throws InvalidParametersException
      */
@@ -50,16 +50,16 @@ public class CommentsDb extends EntitiesDb{
             try {
                 updateComment(comment);
             } catch (EntityDoesNotExistException e) {
-             // This situation is not tested as replicating such a situation is 
-             // difficult during testing
+                // Esta situación no se ha probado como la replicación de tal situación 
+                // es difícil durante la prueba
                 Assumption.fail("Entity found be already existing and not existing simultaneously");
             }
         }
     }
     
     /**
-     * Preconditions: 
-     * <br> * {@code entityToAdd} is not null and has valid data.
+     * Precondiciones: 
+     * <br> * {@code entityToAdd} no es nulo y tiene datos válidos.
      */
     @Override
     public CommentAttributes createEntity(EntityAttributes entityToAdd) 
@@ -75,7 +75,7 @@ public class CommentsDb extends EntitiesDb{
     }
     
     /**
-     * Remove search document for the given comment
+     * Eliminar Documento de la búsqueda por el comentario dado
      * @param commentToDelete
      */
     public void deleteDocument(CommentAttributes commentToDelete){
@@ -88,7 +88,7 @@ public class CommentsDb extends EntitiesDb{
     }
     
     /*
-     * Get comment for comment's Id
+     * Conseguir comentario para el id del comentario
      */
     public CommentAttributes getComment(Long commentId){
         Assumption.assertNotNull(Const.StatusCodes.DBLEVEL_NULL_INPUT, commentId);
@@ -103,7 +103,7 @@ public class CommentsDb extends EntitiesDb{
     }
     
     /*
-     * Get comment for a given comment attribute
+     * Conseguir comentario para un atributo camentario dado
      */
     public CommentAttributes getComment(CommentAttributes commentToGet){
         Assumption.assertNotNull(Const.StatusCodes.DBLEVEL_NULL_INPUT, commentToGet);
@@ -124,7 +124,7 @@ public class CommentsDb extends EntitiesDb{
     }
     
     /*
-     * Get comments for a giver email
+     * Conseguir comentario para un email dado
      */
     public List<CommentAttributes> getCommentsForGiver(String courseId, String giverEmail){
         Assumption.assertNotNull(Const.StatusCodes.DBLEVEL_NULL_INPUT, courseId);
@@ -140,7 +140,7 @@ public class CommentsDb extends EntitiesDb{
     }
     
     /*
-     * Get comments for a giver email and the comment status
+     * Conseguir comentario para un email dado y elestado del comentario
      */
     public List<CommentAttributes> getCommentsForGiverAndStatus(String courseId, String giverEmail, CommentStatus status){
         Assumption.assertNotNull(Const.StatusCodes.DBLEVEL_NULL_INPUT, courseId);
@@ -157,7 +157,7 @@ public class CommentsDb extends EntitiesDb{
     }
     
     /*
-     * Get comments with draft status
+     * Obtener comentarios con proyecto de estado
      */
     public List<CommentAttributes> getCommentDrafts(String giverEmail){
         Assumption.assertNotNull(Const.StatusCodes.DBLEVEL_NULL_INPUT, giverEmail);
@@ -172,7 +172,7 @@ public class CommentsDb extends EntitiesDb{
     }
 
     /*
-     * Get comment for the receiver email
+     * Consigue comentario para el correo electrónico del receptor
      */
     public List<CommentAttributes> getCommentsForReceiver(String courseId, CommentRecipientType recipientType, String receiverEmail){
         Assumption.assertNotNull(Const.StatusCodes.DBLEVEL_NULL_INPUT, courseId);
@@ -189,7 +189,7 @@ public class CommentsDb extends EntitiesDb{
     }
     
     /*
-     * Get comment for the viewer (who can see the comment) type
+     * Consigue comentar para el espectador (que puede ver el comentario) tipo
      */
     public List<CommentAttributes> getCommentsForCommentViewer(String courseId, CommentRecipientType commentViewerType){
         Assumption.assertNotNull(Const.StatusCodes.DBLEVEL_NULL_INPUT, courseId);
@@ -205,7 +205,7 @@ public class CommentsDb extends EntitiesDb{
     }
     
     /*
-     * Get comment for the sending state (SENT|SENDING|PENDING)
+     * Consigue comentario para el Estado que envía (ENVIADO | ENVÍO | PENDIENTE)
      */
     public List<CommentAttributes> getCommentsForSendingState(String courseId, CommentSendingState state){
         Assumption.assertNotNull(Const.StatusCodes.DBLEVEL_NULL_INPUT, courseId);
@@ -220,7 +220,7 @@ public class CommentsDb extends EntitiesDb{
     }
     
     /*
-     * Update comment from old state to new state
+     * Actualización de comentarios de un estado antiguo a un nuevo estado
      */
     public void updateComments(String courseId, CommentSendingState oldState, CommentSendingState newState){
         Assumption.assertNotNull(Const.StatusCodes.DBLEVEL_NULL_INPUT, courseId);
@@ -235,8 +235,8 @@ public class CommentsDb extends EntitiesDb{
     }
 
     /**
-     * Preconditions: 
-     * <br> * {@code newAttributes} is not null and has valid data.
+     * Precondiciones: 
+     * <br> * {@code newAttributes} no es nulo y tiene datos válidos.
      */
     public CommentAttributes updateComment(CommentAttributes newAttributes) throws InvalidParametersException, EntityDoesNotExistException{
         Assumption.assertNotNull(Const.StatusCodes.DBLEVEL_NULL_INPUT,  newAttributes);
@@ -283,7 +283,7 @@ public class CommentsDb extends EntitiesDb{
     }
     
     /*
-     * Update old instructor email used in the comment with the new one
+     * Actualizar el email antiguo del instructor utilizado en el comentario con uno nuevo
      */
     public void updateInstructorEmail(String courseId, String oldInstrEmail, String updatedInstrEmail) {
         
@@ -292,7 +292,7 @@ public class CommentsDb extends EntitiesDb{
         Assumption.assertNotNull(Const.StatusCodes.DBLEVEL_NULL_INPUT, updatedInstrEmail);
         
         updateInstructorEmailAsGiver(courseId, oldInstrEmail, updatedInstrEmail);
-        // for now, instructors can only be giver
+        // por ahora, los instructores sólo pueden ser dadores
         // updateInstructorEmailAsRecipient(courseId, oldInstrEmail, updatedInstrEmail);
     }
     
@@ -306,7 +306,7 @@ public class CommentsDb extends EntitiesDb{
         getPM().close();
     }
     
-    // for now, this method is not being used as instructor cannot be receiver
+    // Por ahora, este método no está siendo utilizado como instructor no puede ser receptor
     @SuppressWarnings("unused")
     private void updateInstructorEmailAsRecipient(String courseId, String oldInstrEmail, String updatedInstrEmail) {
         List<Comment> recipientComments = this.getCommentEntitiesForRecipients(courseId, 
@@ -320,7 +320,7 @@ public class CommentsDb extends EntitiesDb{
     }
     
     /*
-     * Update student email used in the comment with the new one
+     * Actualizar email del estudiante utilizado en el comentario con uno nuevo
      */
     public void updateStudentEmail(String courseId, String oldStudentEmail, String updatedStudentEmail) {
 
@@ -344,7 +344,7 @@ public class CommentsDb extends EntitiesDb{
     }
     
     /*
-     * Delete comments given by certain instructor
+     * Eliminar los comentarios dados por cierto instructor
      */
     public void deleteCommentsByInstructorEmail(String courseId, String email) {
         
@@ -363,7 +363,7 @@ public class CommentsDb extends EntitiesDb{
     }
     
     /*
-     * Delete comments given to certain student
+     * Eliminar los comentarios dados a cierto estudiante
      */
     public void deleteCommentsByStudentEmail(String courseId, String email) {
 
@@ -380,7 +380,7 @@ public class CommentsDb extends EntitiesDb{
     }
     
     /*
-     * Delete comments given to certain team
+     * Eliminar los comentarios dados a determinado equipo
      */
     public void deleteCommentsForTeam(String courseId, String teamName) {
         
@@ -396,7 +396,7 @@ public class CommentsDb extends EntitiesDb{
     }
     
     /*
-     * Delete comments given to certain section
+     * Eliminar los comentarios dados a cierta sección
      */
     public void deleteCommentsForSection(String courseId, String sectionName) {
         
@@ -412,7 +412,7 @@ public class CommentsDb extends EntitiesDb{
     }
     
     /*
-     * Delete comments in certain course
+     * Eliminar comentarios en determinado curso
      */
     public void deleteCommentsForCourse(String courseId) {
 
@@ -425,7 +425,7 @@ public class CommentsDb extends EntitiesDb{
     }
     
     /*
-     * Delete comments in certain courses
+     * Eliminar comentarios en determinado cursos
      */
     public void deleteCommentsForCourses(List<String> courseIds) {
         
@@ -438,14 +438,14 @@ public class CommentsDb extends EntitiesDb{
     }
     
     /*
-     * Create or update search document for the given comment
+     * Crear o actualizar el documento de búsqueda para el comentario dado
      */
     public void putDocument(CommentAttributes comment){
         putDocument(Const.SearchIndex.COMMENT, new CommentSearchDocument(comment));
     }
     
     /**
-     * Search for comments
+     * Buscar comentarios
      * @return {@link CommentSearchResultBundle}
      */
     public CommentSearchResultBundle search(String queryString, String googleId, String cursorString){
@@ -459,7 +459,7 @@ public class CommentsDb extends EntitiesDb{
     }
     
     /**
-     * @deprecated Not scalable. Don't use unless in admin features.
+     * @deprecated No escalable. No utilice a menos que en las funciones de administración.
      */
     @Deprecated
     public List<CommentAttributes> getAllComments() {
@@ -594,7 +594,7 @@ public class CommentsDb extends EntitiesDb{
         }
     }
     
-    // Gets a comment entity if the ID is known
+    // Obtiene una entidad comentario si la ID es conocida
     private Comment getCommentEntity(Long commentId) {
         Query q = getPM().newQuery(Comment.class);
         q.declareParameters("Long commentIdParam");

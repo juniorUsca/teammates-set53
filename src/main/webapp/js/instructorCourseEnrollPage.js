@@ -1,5 +1,4 @@
-
-var loadUpFunction = function () {
+window.addEventListener('load', function (){
     var typingErrMsg = "Please use | character ( shift+\\ ) to seperate fields, or copy from your existing spreadsheet.";
     var notified = false;
 
@@ -22,10 +21,4 @@ var loadUpFunction = function () {
             }
         })
     };
-};
-
-if (window.addEventListener) {
-	window.addEventListener('load', loadUpFunction);
-} else {
-	window.attachEvent('load', loadUpFunction);
-}
+})

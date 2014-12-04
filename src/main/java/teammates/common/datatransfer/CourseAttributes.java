@@ -4,9 +4,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.jdo.PersistenceManager;
+import javax.jdo.Query;
+
 import teammates.common.util.FieldValidator;
 import teammates.common.util.Sanitizer;
 import teammates.common.util.FieldValidator.FieldType;
+import teammates.storage.datastore.Datastore;
 import teammates.storage.entity.Course;
 
 /**
@@ -19,11 +23,36 @@ public class CourseAttributes extends EntityAttributes implements Comparable<Cou
     public String name;
     public Date createdAt;
     public boolean isArchived;
+    //------------------------------------MODIFICACION-----------------
+    public List<Course> Listacursos;
+    public Integer cantidadCursos;
+    
+    //Si queremos hacer la consulta y sacar la lista de cursos: query=true
+    public CourseAttributes(boolean query) {
+        if(query){
+            PersistenceManager pm = Datastore.getPersistenceManager();
+            Query q = pm.newQuery(Course.class);
+            try{
+                Listacursos = (List<Course>) q.execute();
+                cantidadCursos=Listacursos.size();
+                
+            }catch(Exception e){
+                
+            }finally{
+                 q.closeAll();
+            }
+            pm.close();
+        }
+              
+    }
+    
+  //--------------FIN---MODIFICACION-----------------
+    
     
     public CourseAttributes() {
-
+        
     }
-
+    
     public CourseAttributes(String courseId, String name) {
         this.id = Sanitizer.sanitizeTitle(courseId);
         this.name = Sanitizer.sanitizeTitle(name);

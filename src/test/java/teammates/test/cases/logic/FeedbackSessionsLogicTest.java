@@ -360,8 +360,6 @@ public class FeedbackSessionsLogicTest extends BaseComponentUsingTaskQueueTestCa
             assertEquals(question1.questionType, question2.questionType);
             assertEquals(question1.numberOfEntitiesToGiveFeedbackTo, question2.numberOfEntitiesToGiveFeedbackTo);
         }
-        assertEquals(0, copiedSession.respondingInstructorList.size());
-        assertEquals(0, copiedSession.respondingStudentList.size());
         
         ______TS("Failure case: duplicate session");
         

@@ -32,18 +32,17 @@ public class InstructorStudentCommentAddAction extends Action {
     protected ActionResult execute()  throws EntityDoesNotExistException {
         
         String courseId = getRequestParamValue(Const.ParamsNames.COURSE_ID);
-        Assumption.assertPostParamNotNull(Const.ParamsNames.COURSE_ID, courseId);
+        Assumption.assertNotNull(courseId);
         
         //used to redirect to studentDetailsPage or studentRecordsPage
         String studentEmail = getRequestParamValue(Const.ParamsNames.STUDENT_EMAIL);
-        Assumption.assertPostParamNotNull(Const.ParamsNames.STUDENT_EMAIL, studentEmail);
         
         boolean isFromCommentsPage = getRequestParamAsBoolean(Const.ParamsNames.FROM_COMMENTS_PAGE);
         boolean isFromStudentDetailsPage = getRequestParamAsBoolean(Const.ParamsNames.FROM_STUDENT_DETAILS_PAGE);
         boolean isFromCourseDetailsPage = getRequestParamAsBoolean(Const.ParamsNames.FROM_COURSE_DETAILS_PAGE);
         
         String commentText = getRequestParamValue(Const.ParamsNames.COMMENT_TEXT); 
-        Assumption.assertPostParamNotNull(Const.ParamsNames.COMMENT_TEXT, commentText);
+        Assumption.assertNotNull(commentText);
         Assumption.assertNotEmpty(commentText);
         
         verifyAccessibleByInstructor(courseId);

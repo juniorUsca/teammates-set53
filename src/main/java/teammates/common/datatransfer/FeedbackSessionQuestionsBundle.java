@@ -3,11 +3,9 @@ package teammates.common.datatransfer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public class FeedbackSessionQuestionsBundle {
 
@@ -83,19 +81,6 @@ public class FeedbackSessionQuestionsBundle {
 
         for (Map.Entry<String, String> entry : sortedList) {
             result.put(entry.getKey(), entry.getValue());
-        }
-        return result;
-    }
-    
-    public Set<String> getRecipientEmails(String feedbackQuestionId) {
-        List<Map.Entry<String, String>> emailList =
-                new ArrayList<Map.Entry<String, String>>(this.recipientList
-                        .get(feedbackQuestionId).entrySet());
-        
-        HashSet<String> result = new HashSet<String>();
-
-        for (Map.Entry<String, String> entry : emailList) {
-            result.add(entry.getKey());
         }
         return result;
     }

@@ -619,19 +619,6 @@ public class FeedbackQuestionsLogic {
      */
     public void updateFeedbackQuestion(FeedbackQuestionAttributes newAttributes)
             throws InvalidParametersException, EntityDoesNotExistException {
-
-        updateFeedbackQuestion(newAttributes, false);
-    }
-
-    public void updateFeedbackQuestionWithResponseRateCheck(FeedbackQuestionAttributes newAttributes)
-            throws InvalidParametersException, EntityDoesNotExistException {
-
-        updateFeedbackQuestion(newAttributes, true);
-    }
-
-
-    public void updateFeedbackQuestion(FeedbackQuestionAttributes newAttributes, boolean hasResponseRateCheck)
-            throws InvalidParametersException, EntityDoesNotExistException {
         FeedbackQuestionAttributes oldQuestion = null;
         if (newAttributes.getId() == null) {
             oldQuestion = fqDb.getFeedbackQuestion(newAttributes.feedbackSessionName, 
@@ -646,14 +633,14 @@ public class FeedbackQuestionsLogic {
         }
         
         if(oldQuestion.isChangesRequiresResponseDeletion(newAttributes)) {
-            frLogic.deleteFeedbackResponsesForQuestionAndCascade(oldQuestion.getId(), hasResponseRateCheck);
+            frLogic.deleteFeedbackResponsesForQuestionAndCascade(oldQuestion.getId());
         }
         
         oldQuestion.updateValues(newAttributes);
         newAttributes.removeIrrelevantVisibilityOptions();
         fqDb.updateFeedbackQuestion(newAttributes);
     }
-
+    
     public void deleteFeedbackQuestionsForSession(String feedbackSessionName, String courseId) 
             throws EntityDoesNotExistException{
         List<FeedbackQuestionAttributes> questions = 
@@ -678,21 +665,7 @@ public class FeedbackQuestionsLogic {
         if (questionToDeleteById != null) {
             deleteFeedbackQuestionCascade(questionToDeleteById.feedbackSessionName,
                                         questionToDeleteById.courseId, 
-                                        questionToDeleteById.questionNumber, false);
-        } else {
-            // Silently fail if question does not exist.
-        }
-        
-    }
-
-    public void deleteFeedbackQuestionCascadeWithResponseRateCheck(String feedbackQuestionId){
-        FeedbackQuestionAttributes questionToDeleteById = 
-                        getFeedbackQuestion(feedbackQuestionId);
-        
-        if (questionToDeleteById != null) {
-            deleteFeedbackQuestionCascade(questionToDeleteById.feedbackSessionName,
-                                        questionToDeleteById.courseId, 
-                                        questionToDeleteById.questionNumber, true);
+                                        questionToDeleteById.questionNumber);
         } else {
             // Silently fail if question does not exist.
         }
@@ -707,7 +680,7 @@ public class FeedbackQuestionsLogic {
      * shifts larger question numbers down by one to preserve number order.
      */
     public void deleteFeedbackQuestionCascade(
-            String feedbackSessionName, String courseId, int questionNumber, boolean hasResponseRateCheck) {
+            String feedbackSessionName, String courseId, int questionNumber) {
         
         FeedbackQuestionAttributes questionToDelete =
                 getFeedbackQuestion(feedbackSessionName, courseId, questionNumber);
@@ -716,7 +689,7 @@ public class FeedbackQuestionsLogic {
             return; // Silently fail if question does not exist.
         } else {
             // Cascade delete responses for question.
-            frLogic.deleteFeedbackResponsesForQuestionAndCascade(questionToDelete.getId(), hasResponseRateCheck);
+            frLogic.deleteFeedbackResponsesForQuestionAndCascade(questionToDelete.getId());
         }
         
         List<FeedbackQuestionAttributes> questionsToShiftQnNumber = null;

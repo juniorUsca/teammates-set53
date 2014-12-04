@@ -16,7 +16,7 @@ public class StudentAttributesFactory {
     public static final int MAX_FIELD_COUNT = 5;
     
     public static final String ERROR_HEADER_ROW_FIELD_REPEATED = "The header row contains repeated fields";
-    public static final String ERROR_HEADER_ROW_FIELD_MISSED = "The following required column names are missing in the header row";
+    public static final String ERROR_HEADER_ROW_FIELD_MISSED = "The header row misses required fields";
 
     public static final String ERROR_ENROLL_LINE_EMPTY = "Enroll line was empty\n";
     public static final String ERROR_ENROLL_LINE_TOOFEWPARTS 
@@ -59,12 +59,7 @@ public class StudentAttributesFactory {
         int fieldCount = locateColumnIndexes(headerRow);
         
         if (fieldCount < MIN_FIELD_COUNT || !hasTeam || !hasName || !hasEmail) {
-            
-            String missingField = "";
-            missingField = hasTeam? missingField : missingField + " <mark>Team</mark>";
-            missingField = hasName? missingField : missingField + " <mark>Name</mark>";
-            missingField = hasEmail? missingField : missingField + " <mark>Email</mark>";
-            throw new EnrollException(ERROR_HEADER_ROW_FIELD_MISSED + ": " + missingField);
+            throw new EnrollException(ERROR_HEADER_ROW_FIELD_MISSED);
         } 
     }
     
@@ -124,27 +119,27 @@ public class StudentAttributesFactory {
         for (int curPos = 0; curPos < columns.length; curPos++) {
             String str = columns[curPos].trim().toLowerCase();
             
-            if(StringHelper.isAnyMatching(str, FieldValidator.REGEX_COLUMN_SECTION)){
+            if(StringHelper.isMatching(str, FieldValidator.REGEX_COLUMN_SECTION)){
                 sectionColumnIndex = curPos;
                 count++;
                 fieldCount = (!hasSection) ? fieldCount + 1 : fieldCount;
                 hasSection = true;
-            } else if (StringHelper.isAnyMatching(str, FieldValidator.REGEX_COLUMN_TEAM)) {
+            } else if (StringHelper.isMatching(str, FieldValidator.REGEX_COLUMN_TEAM)) {
                 teamColumnIndex = curPos;
                 count++;
                 fieldCount = (!hasTeam) ? fieldCount + 1 : fieldCount;
                 hasTeam = true;
-            } else if (StringHelper.isAnyMatching(str, FieldValidator.REGEX_COLUMN_NAME)) {
+            } else if (StringHelper.isMatching(str, FieldValidator.REGEX_COLUMN_NAME)) {
                 nameColumnIndex = curPos;
                 count++;
                 fieldCount = (!hasName) ? fieldCount + 1 : fieldCount;
                 hasName = true;
-            } else if (StringHelper.isAnyMatching(str, FieldValidator.REGEX_COLUMN_EMAIL)) {
+            } else if (StringHelper.isMatching(str, FieldValidator.REGEX_COLUMN_EMAIL)) {
                 emailColumnIndex = curPos;
                 count++;
                 fieldCount = (!hasEmail) ? fieldCount + 1 : fieldCount;
                 hasEmail = true;
-            } else if (StringHelper.isAnyMatching(str, FieldValidator.REGEX_COLUMN_COMMENT)) {
+            } else if (StringHelper.isMatching(str, FieldValidator.REGEX_COLUMN_COMMENT)) {
                 commentColumnIndex = curPos;
                 count++;
                 fieldCount = (!hasComment) ? fieldCount + 1 : fieldCount;

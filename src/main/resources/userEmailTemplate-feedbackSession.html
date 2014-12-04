@@ -1,21 +1,26 @@
-Hello ${userName},
+Hola ${userName},
 
-<p/>
-${instructorFragment}
-${joinFragment}
+<p />
+${instructorFragment} ${joinFragment}
 
-<p/>
-The following feedback session ${status}.
-<br>&nbsp;&nbsp; Course: [${courseId}]${courseName} 
-<br>&nbsp;&nbsp; Feedback Session Name: ${feedbackSessionName}
-<br>&nbsp;&nbsp; Deadline: ${deadline}
+<p />
+La siguiente sesión de evaluación ${status}.
 <br>
-<strong>To submit feedback for the above session, please go to this Web address: </strong><a href="${submitUrl}">${submitUrl}</a>
-<br/>*The above link is unique to you. Please do not share it with others.
-<br/>
-<p/>
-If you encounter any problems when using the system, you can email TEAMMATES support team at teammates@comp.nus.edu.sg
-<p/>
-Regards, 
+&nbsp;&nbsp; Curso: [${courseId}]${courseName}
 <br>
-TEAMMATES Team.
+&nbsp;&nbsp; Nombre de la Sesión de Evaluación: ${feedbackSessionName}
+<br>
+&nbsp;&nbsp; Fecha límite: ${deadline}
+<br>
+<strong>Para enviar sus comentarios de la sesión anterior, Para
+	ver las respuestas de su equipo, por favor vaya a esta dirección Web: </strong>
+<a href="${submitUrl}">${submitUrl}</a>
+
+<p />
+Si encuentra algún problema mientras usa el sistema, puede enviar un
+correo electrónico al equipo de soporte de TEAMMATES escribiendo a
+teammates@comp.nus.edu.sg
+<p />
+Saludos,
+<br>
+Equipo de TEAMMATES.

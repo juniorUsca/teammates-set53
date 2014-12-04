@@ -28,6 +28,16 @@ public class ActionFactory {
         map(ADMIN_INSTRUCTORACCOUNT_ADD, AdminInstructorAccountAddAction.class);
         map(ADMIN_SESSIONS_PAGE,AdminSessionsPageAction.class);
         map(ADMIN_SEARCH_PAGE, AdminSearchPageAction.class);
+        //Estadisticas****
+        map(ADMIN_ESTADISTICAS_PAGE,AdminEstadisticasPageAction.class);
+        map(ADMIN_ESTADISTICAS_CURSOXANIO,AdminEstadisticasCursoXanio.class);
+        map(ADMIN_ESTADISTICAS_ESTUDXCURSO,AdminEstadisticasEstudXcurso.class);
+        map(ADMIN_ESTADISTICAS_ESTUDXINSTRUC,AdminEstadisticasEstudXinstructor.class);
+        map(ADMIN_ESTADISTICAS_CURSOSXINSTRUC,AdminEstadisticasCursoXinstruc.class);
+        //Estadisticas****
+        //Modificacion usca
+     // aki modifico
+        map(INSTRUCTOR_COURSE_DELETE_ALL_STUDENTS, InstructorCourseDeleteAllStudentsAction.class);
         
         map(INSTRUCTOR_COURSES_PAGE, InstructorCoursesPageAction.class);
         map(INSTRUCTOR_COURSE_ADD, InstructorCourseAddAction.class);
@@ -102,6 +112,14 @@ public class ActionFactory {
         map(INSTRUCTOR_COMMENTS_PAGE, InstructorCommentsPageAction.class);
 
         map(STUDENT_COMMENTS_PAGE, StudentCommentsPageAction.class);
+        // --------------------------MODIFICACION ------------------------------
+        map(INSTRUCTOR_COURSE_ONLY_EDIT_PAGE, InstructorCourseEdit.class);
+        map(INSTRUCTOR_COURSE_EDIT_SAVE, InstructorCourseEditSave.class);
+        
+        map(STUDENT_COURSES_PAGE, StudentCoursesPageAction.class);
+        map(STUDENT_COURSE_NOTIFICACION_PAGE, StudentNotificacionPageAction.class);
+        map(STUDENT_COURSE_SEARCH, studentCourseSearch.class);
+     // --------------------------FIN MODIFICACION ------------------------------
         map(STUDENT_COURSE_DETAILS_PAGE, StudentCourseDetailsPageAction.class);
         map(STUDENT_COURSE_JOIN, StudentCourseJoinAction.class);
         map(STUDENT_COURSE_JOIN_NEW, StudentCourseJoinAction.class);

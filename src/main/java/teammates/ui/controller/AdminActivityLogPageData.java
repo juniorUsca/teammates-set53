@@ -30,8 +30,7 @@ public class AdminActivityLogPageData extends PageData {
     
     /**
      * This determines whether the logs related to testing data should be shown. Use "testdata=true" in URL
-     * to show all testing logs. This will keep showing all logs from testing data despite any action or change in the page
-     * unless the the page is reloaded with "?testdata=false"  or simply reloaded with this parameter omitted.
+     * to show all testing logs
      */
     public boolean ifShowTestData = false;
     
@@ -41,10 +40,10 @@ public class AdminActivityLogPageData extends PageData {
     /**
      * this array stores the requests to be excluded from being shown in admin activity logs page
      */
-    public static String[] excludedLogRequestURIs = {Const.ActionURIs.INSTRUCTOR_EVAL_STATS_PAGE,
+    private static String[] excludedLogRequestURIs = {Const.ActionURIs.INSTRUCTOR_EVAL_STATS_PAGE,
                                                       Const.ActionURIs.INSTRUCTOR_FEEDBACK_STATS_PAGE,                                                      
                                                       //this servlet name is set in CompileLogsServlet
-                                                      Const.AutomatedActionNames.AUTOMATED_LOG_COMILATION};
+                                                      "logCompilation"};
     
     public boolean isTestingData(String email){
         boolean isTestingAccount = false;
@@ -65,7 +64,7 @@ public class AdminActivityLogPageData extends PageData {
      */
     private boolean arrayContains(String[] arr, String value){
         for (int i = 0; i < arr.length; i++){
-            if(arr[i].equals(value.toLowerCase().trim())){
+            if(arr[i].equals(value.toLowerCase())){
                 return true;
             }
         }
@@ -114,91 +113,65 @@ public class AdminActivityLogPageData extends PageData {
      * Performs the actual filtering, based on QueryParameters
      * returns false if the logEntry fails the filtering process
      */
-    public ActivityLogEntry filterLogs(ActivityLogEntry logEntry){
+    public boolean filterLogs(ActivityLogEntry logEntry){
         if(!logEntry.toShow()){
-            return logEntry;
+            return false;
         }
         
         if(q == null){
             if (this.queryMessage == null){
                 this.queryMessage = "Error parsing the query. QueryParameters not created.";
             }
-            logEntry.setToShow(true);
-            return logEntry;
+            return true;
         }
         
         //Filter based on what is in the query
         if(q.isToDateInQuery){
             if(logEntry.getTime() > q.toDateValue){
-                logEntry.setToShow(false);
-                return logEntry;
+                return false;
             }
         }
         if(q.isFromDateInQuery){
             if(logEntry.getTime() < q.fromDateValue){
-                logEntry.setToShow(false);
-                return logEntry;
+                return false;
             }
         }
         if(q.isRequestInQuery){
             if(!arrayContains(q.requestValues, logEntry.getServletName())){
-                logEntry.setToShow(false);
-                return logEntry;
+                return false;
             }
         }
         if(q.isResponseInQuery){
             if(!arrayContains(q.responseValues, logEntry.getAction())){
-                logEntry.setToShow(false);
-                return logEntry;
+                return false;
             }
         }
         if(q.isPersonInQuery){
-            if(!logEntry.getName().toLowerCase().contains(q.personValue.toLowerCase()) && 
-                    !logEntry.getId().toLowerCase().contains(q.personValue.toLowerCase()) && 
-                    !logEntry.getEmail().toLowerCase().contains(q.personValue.toLowerCase())){
-                logEntry.setToShow(false);
-                return logEntry;
+            if(!logEntry.getName().toLowerCase().contains(q.personValue) && 
+                    !logEntry.getId().toLowerCase().contains(q.personValue) && 
+                    !logEntry.getEmail().toLowerCase().contains(q.personValue)){
+                return false;
             }
         }
         if(q.isRoleInQuery){
             if(!arrayContains(q.roleValues, logEntry.getRole())){
-                logEntry.setToShow(false);
-                return logEntry;
+                return false;
             }
         }
         if(q.isCutoffInQuery){
             if(logEntry.getTimeTaken() == null){
-                logEntry.setToShow(false);
-                return logEntry;
+                return false;
             }
             
             if(logEntry.getTimeTaken() < q.cutoffValue){
-                logEntry.setToShow(false);
-                return logEntry;
+                return false;
             }
-        } 
-        if(q.isInfoInQuery){
-            
-            for (String keyString : q.infoValues){
-                if(!logEntry.getMessageInfo().toLowerCase().contains(keyString.toLowerCase())){
-                    logEntry.setToShow(false);
-                    return logEntry;
-                }
-            }
-            
-            logEntry.setToShow(true);
-            logEntry.setKeyStringsToHighlight(q.infoValues);
-            logEntry.highlightKeyStringInMessageInfoHtml();
-            return logEntry;
-        }
-        
+        }       
         if(shouldExcludeLogEntry(logEntry)){
-            logEntry.setToShow(false);
-            return logEntry;
+            return false;
         }
         
-        logEntry.setToShow(true);
-        return logEntry;
+        return true;
     }
     
     /**
@@ -375,9 +348,6 @@ public class AdminActivityLogPageData extends PageData {
         public boolean isCutoffInQuery;
         public long cutoffValue;
         
-        public boolean isInfoInQuery;
-        public String[] infoValues;
-        
         public QueryParameters(){
             isToDateInQuery = false;
             isFromDateInQuery = false;
@@ -386,7 +356,6 @@ public class AdminActivityLogPageData extends PageData {
             isPersonInQuery = false;
             isRoleInQuery = false;
             isCutoffInQuery = false;
-            isInfoInQuery = false;
         }
         
         /**
@@ -420,9 +389,6 @@ public class AdminActivityLogPageData extends PageData {
             } else if (label.equals("time")){
                 isCutoffInQuery = true;
                 cutoffValue = Long.parseLong(values[0]);
-            } else if (label.equals("info")){
-                isInfoInQuery = true;
-                infoValues = values;
             } else {
                 throw new Exception("Invalid label");
             }

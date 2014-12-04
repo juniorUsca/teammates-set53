@@ -15,16 +15,17 @@ import teammates.common.exception.InvalidParametersException;
 import teammates.common.util.Assumption;
 import teammates.common.util.Const;
 import teammates.common.util.Utils;
+import teammates.storage.entity.Comment;
 import teammates.storage.entity.Course;
 
 /**
- * Handles CRUD Operations for course entities.
- * The API uses data transfer classes (i.e. *Attributes) instead of presistable classes.
+ * Maneja operaciones CRUD para {@link Comment}.
+ * La API utiliza clases de transferencia de datos (es decir, * Atributos) en lugar de las clases con persistencia.
  */
 public class CoursesDb extends EntitiesDb {
     
-    /* Explanation: Based on our policies for the storage component, this class
-     * does not handle cascading. It treats invalid values as an exception. 
+    /* Explicación: En base a las políticas para el componente de almacenamiento, esta clase
+     * no maneja en cascada. Se trata los valores no válidos como una excepción. 
      * 
      */
 
@@ -41,17 +42,17 @@ public class CoursesDb extends EntitiesDb {
             try {
                 updateCourse(course);
             } catch (EntityDoesNotExistException e) {
-             // This situation is not tested as replicating such a situation is 
-             // difficult during testing
+                // Esta situación no se ha probado como la replicación de tal situación 
+                // es difícil durante la prueba
                 Assumption.fail("Entity found be already existing and not existing simultaneously");
             }
         }
     }
 
     /**
-     * Preconditions: <br>
-     * * All parameters are non-null. 
-     * @return Null if not found.
+     * Precondiciones: <br>
+     * * Todos los parametrosno son nulos. 
+     * @return Null si no se encuentra.
      */
     public CourseAttributes getCourse(String courseId) {
         
@@ -68,7 +69,7 @@ public class CoursesDb extends EntitiesDb {
     
     
     /**
-     * @deprecated Not scalable. Use only in admin features. 
+     * @deprecated No escalable. Utilice sólo en las funciones de administración. 
      */
     @Deprecated
     public List<CourseAttributes> getAllCourses() {
@@ -87,11 +88,11 @@ public class CoursesDb extends EntitiesDb {
     }
 
     /**
-     * Updates the course.<br>
-     * Updates only course archive status.<br>
-     * Does not follow the 'keep existing' policy <br> 
-     * Preconditions: <br>
-     * * {@code courseToUpdate} is non-null. <br>
+     * Actualiza el curso.<br>
+     * Actualizaciones de estado de sólo curso Archivado.<br>
+     * No sigue la política de mantener vigente ' <br> 
+     * Precondiciones: <br>
+     * * {@code courseToUpdate} es no null. <br>
      * @throws InvalidParametersException, EntityDoesNotExistException
      */
     public void updateCourse(CourseAttributes courseToUpdate) throws InvalidParametersException, EntityDoesNotExistException {
@@ -118,9 +119,9 @@ public class CoursesDb extends EntitiesDb {
 
     /**
      * Note: This is a non-cascade delete.<br>
-     *   <br> Fails silently if there is no such object.
+     *   <br> Falla en silencio si no hay tal objeto.
      * <br> Preconditions: 
-     * <br> * {@code courseId} is not null.
+     * <br> * {@code courseId} es no null.
      */
     public void deleteCourse(String courseId) {
         

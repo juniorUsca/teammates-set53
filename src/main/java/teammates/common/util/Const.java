@@ -76,7 +76,9 @@ public class Const {
      * the UI.
      */
     public class Tooltips{
-    
+        //modificado
+        public static final String STUDENT_NOTIFICATION_DETAILS = "Muestra las Notificaciones del estudiante";
+    //fin modificado
         public static final String COURSE_ENROLL = "Enroll student into the course";
         public static final String COURSE_ENROLL_SAMPLE_SPREADSHEET = "Download a sample team data spreadsheet";
         public static final String COURSE_DETAILS = "View, edit and send invitation emails to the students in the course";
@@ -284,13 +286,22 @@ public class Const {
 
     public class ParamsNames{
         
+        //Modificacio. Servira para status_message de StudentCoursesSearch.java para boton autojoin
+        public static final String NO_MOSTRAR_NADA_AUTOJOIN= "0";
+        public static final String CAMPOS_VACIOS_AUTOJOIN = "1";
+        public static final String YA_ESTA_UNIDO_AUTOJOIN= "2";
+        public static final String ID_NOMBRE_INCORRECTOS_AUTOJOIN= "3";
+        public static final String UNIDO_EXITOSAMENTE_AUTOJOIN = "4";
+        public static final String CURSO_ENCONTRADO_AUTOJOIN = "5";
+        //usca
+        public static final String CSV_TO_HTML_TABLE_NEEDED = "csvtohtmltable";
+        //FIN Modificacion
+        
         public static final String BLOB_KEY = "blob-key";
         
         public static final String COPIED_FEEDBACK_SESSION_NAME = "copiedfsname";
         public static final String COPIED_COURSE_ID = "copiedcourseid";
-        
-        public static final String CSV_TO_HTML_TABLE_NEEDED = "csvtohtmltable";
-        
+
         public static final String COURSE_ID = "courseid";
         public static final String COURSE_NAME = "coursename";
         public static final String COURSE_EDIT_MAIN_INDEX = "courseeditmainindex";
@@ -553,6 +564,10 @@ public class Const {
         public static final String INSTRUCTOR_COURSES_PAGE = "/page/instructorCoursesPage";
         public static final String INSTRUCTOR_COURSE_ADD = "/page/instructorCourseAdd";
         public static final String INSTRUCTOR_COURSE_DELETE = "/page/instructorCourseDelete";
+        
+        //modificacion
+        public static final String INSTRUCTOR_COURSE_ONLY_EDIT_PAGE = "/page/instructorCourseEdit";
+        
         public static final String INSTRUCTOR_COURSE_ARCHIVE = "/page/instructorCourseArchive";
         public static final String INSTRUCTOR_COURSE_DETAILS_PAGE = "/page/instructorCourseDetailsPage";
         public static final String INSTRUCTOR_COURSE_EDIT_PAGE = "/page/instructorCourseEditPage";
@@ -565,6 +580,10 @@ public class Const {
         public static final String INSTRUCTOR_COURSE_ENROLL_PAGE = "/page/instructorCourseEnrollPage";
         public static final String INSTRUCTOR_COURSE_ENROLL_SAVE = "/page/instructorCourseEnrollSave";
         public static final String INSTRUCTOR_COURSE_REMIND = "/page/instructorCourseRemind";
+        
+        //Modificacion usca
+        public static final String INSTRUCTOR_COURSE_DELETE_ALL_STUDENTS = "/page/instructorCourseDeleteAllStudents";
+        
         public static final String INSTRUCTOR_COURSE_INSTRUCTOR_ADD = "/page/instructorCourseInstructorAdd";
         public static final String INSTRUCTOR_COURSE_INSTRUCTOR_EDIT_SAVE = "/page/instructorCourseInstructorEditSave";
         public static final String INSTRUCTOR_COURSE_INSTRUCTOR_DELETE = "/page/instructorCourseInstructorDelete";
@@ -634,6 +653,14 @@ public class Const {
         public static final String STUDENT_COURSE_JOIN_NEW = "/page/studentCourseJoinAuthentication";
         public static final String STUDENT_COURSE_JOIN_AUTHENTICATED = "/page/studentCourseJoinAuthenticated";
         public static final String STUDENT_COMMENTS_PAGE = "/page/studentCommentsPage";
+        
+        //-- ---------------- Modificaciones-------------------------- -->
+        public static final String STUDENT_COURSES_PAGE = "/page/studentCoursesPage";
+        public static final String STUDENT_COURSE_NOTIFICACION_PAGE = "/page/studentNotificacionPage";
+        public static final String STUDENT_COURSE_SEARCH= "/page/studentCourseSearch";
+        
+        //-- ----------------FIN Modificaciones-------------------------- -->
+        
         public static final String STUDENT_COURSE_DETAILS_PAGE = "/page/studentCourseDetailsPage";
         public static final String STUDENT_EVAL_SUBMISSION_EDIT_PAGE = "/page/studentEvalSubmissionEditPage";
         public static final String STUDENT_EVAL_SUBMISSION_EDIT_SAVE = "/page/studentEvalSubmissionEditSave";
@@ -659,6 +686,13 @@ public class Const {
         public static final String ADMIN_EXCEPTION_TEST = "/admin/adminExceptionTest";
         public static final String ADMIN_ACTIVITY_LOG_PAGE = "/admin/adminActivityLogPage";
         public static final String ADMIN_SESSIONS_PAGE = "/admin/adminSessionsPage";
+        //estadisticas******
+        public static final String ADMIN_ESTADISTICAS_PAGE = "/admin/adminEstadisticasPage";
+        public static final String ADMIN_ESTADISTICAS_CURSOXANIO= "/admin/adminestadisticascursoxanio";
+        public static final String ADMIN_ESTADISTICAS_ESTUDXCURSO= "/admin/adminestadisticasestudxcurso";
+        public static final String ADMIN_ESTADISTICAS_ESTUDXINSTRUC= "/admin/adminestadisticasestudxinstruct";
+        public static final String ADMIN_ESTADISTICAS_CURSOSXINSTRUC= "/admin/adminestadisticascursosxinstruc";
+        //estadisticas******
         public static final String ADMIN_SEARCH_PAGE = "/admin/adminSearchPage";
         
         public static final String AUTOMATED_EVAL_OPENING_REMINDERS = "/evaluationopeningreminders";
@@ -681,25 +715,8 @@ public class Const {
         public static final String EVAL_REMIND_EMAIL_WORKER = "/evalRemindEmailWorker";
         public static final String FEEDBACK_REMIND_EMAIL_WORKER = "/feedbackRemindEmailWorker";
         public static final String SEND_EMAIL_WORKER = "/sendEmailWorker";
-        
     }
-    
-    public class AutomatedActionNames{
-        //real servlet names to be logged for automated actions, not for url pattern recognition
-        public static final String AUTOMATED_LOG_COMILATION = "logCompilation";
-        public static final String AUTOMATED_EVAL_CLOSING_MAIL_ACTION = "evaluationClosingMailAction";
-        public static final String AUTOMATED_EVAL_OPENING_MAIL_ACTION = "evaluationOpeningMailAction";
-        public static final String AUTOMATED_FEEDBACKSESSION_CLOSING_MAIL_ACTION = "feedbackSessionClosingMailAction";
-        public static final String AUTOMATED_FEEDBACKSESSION_OPENING_MAIL_ACTION = "feedbackSessionOpeningMailAction";
-        public static final String AUTOMATED_FEEDBACKSESSION_PUBLISHED_MAIL_ACTION = "feedbackSessionPublishedMailAction";
-        public static final String AUTOMATED_PENDING_COMMENT_CLEARED_MAIL_ACTION = "PendingCommentClearedMailAction";
-        public static final String AUTOMATED_EVAL_OPENING_REMINDERS = "evaluationOpeningReminders";
-        public static final String AUTOMATED_EVAL_CLOSING_REMINDERS = "evaluationclosingreminders";        
-        public static final String AUTOMATED_FEEDBACK_OPENING_REMINDERS = "feedbackSessionOpeningReminders";
-        public static final String AUTOMATED_FEEDBACK_CLOSING_REMINDERS = "feedbackSessionClosingReminders";
-        public static final String AUTOMATED_FEEDBACK_PUBLISHED_REMINDERS = "feedbackSessionPublishedReminders";
-    }
-    
+
     public class ViewURIs{
         
         /* We omit adding the 'page' prefix to views because all of them are "pages" */
@@ -740,6 +757,15 @@ public class Const {
         public static final String STUDENT_COURSE_JOIN_CONFIRMATION = "/jsp/studentCourseJoinConfirmation.jsp";
         public static final String STUDENT_COURSE_DETAILS = "/jsp/studentCourseDetails.jsp"; 
         public static final String STUDENT_COMMENTS = "/jsp/studentComments.jsp"; 
+        
+        //-- ---------------- Modificaciones-------------------------- -->
+        
+        public static final String STUDENT_COURSES = "/jsp/studentCourses.jsp";
+        public static final String STUDENT_COURSE_NOTIFICACION = "/jsp/studentNotication.jsp";
+        //Modificacion usada en studentcuorses.jsp
+        public static final String STATUS_MESSAGE_COURSES= "/jsp/statusMessageCourses.jsp";
+        //-- ----------------FIN Modificaciones-------------------------- -->
+        
         public static final String STUDENT_EVAL_SUBMISSION_EDIT = "/jsp/studentEvalEdit.jsp"; 
         public static final String STUDENT_EVAL_RESULTS = "/jsp/studentEvalResults.jsp"; 
         public static final String STUDENT_FEEDBACK_SUBMISSION_EDIT = "/jsp/studentFeedbackSubmissionEdit.jsp"; 
@@ -753,7 +779,9 @@ public class Const {
         public static final String ADMIN_ACTIVITY_LOG = "/jsp/adminActivityLog.jsp";
         public static final String ADMIN_ACCOUNT_DETAILS = "/jsp/adminAccountDetails.jsp";
         public static final String ADMIN_SESSIONS = "/jsp/adminSessions.jsp";
-        
+        //estadisticas****
+        public static final String ADMIN_ESTADISTICAS = "/jsp/adminEstadisticas.jsp";
+        //estadisticas****
         public static final String LOGOUT = "/logout.jsp"; 
         
         
@@ -773,6 +801,8 @@ public class Const {
         public static final String ADMIN_HEADER = "/jsp/adminHeader.jsp"; 
         public static final String FOOTER = "/jsp/footer.jsp"; 
         public static final String STATUS_MESSAGE = "/jsp/statusMessage.jsp";
+        
+        
         public static final String STATUS_MESSAGE_WITHOUT_FOCUS = "/jsp/statusMessageWithoutFocusingToStatus.jsp";
         public static final String EVAL_SUBMISSION_EDIT = "/jsp/evalSubmissionEdit.jsp";
         public static final String FEEDBACK_SUBMISSION_EDIT = "/jsp/feedbackSubmissionEdit.jsp";
@@ -781,6 +811,16 @@ public class Const {
 
     /* These are status messages that may be shown to the user */
     public class StatusMessages{
+        
+        /*-------------------Modificacion---Mensajes Estadistias----------------------------- */
+        public static final String ESTADISTICAS_ANIO_VACIO="Anio no puede ser vacio";
+        public static final String ESTADISTICAS_ANIO_INCORRECTO="Anio incorrecto";
+        public static final String ESTADISTICAS_ANIO_NORESULT="No hay registros en la base de datos";
+        public static final String ESTADISTICAS_ANIO_OK="OK";
+        public static final String ESTADISTICAS_ANIO_FUTURO="Anio futuro";
+        
+        /*-------------------Modificacion---FIN----------------------------- */
+        
         public static final String LOADING = "<img src=\"/images/ajax-loader.gif\" /><br />";
         public static final String STUDENT_FIRST_TIME = "<div style=\"text-align:left;\">Welcome stranger :-) "
                 + "<br/><br/>It seems you are not a registered user of TEAMMATES. To use TEAMMATES, a course instructor has to add you to a course first. "
@@ -828,6 +868,13 @@ public class Const {
                 + "An email containing how to 'join' this course will be sent to %s in a few minutes.";
         public static final String COURSE_INSTRUCTOR_EXISTS = "An instructor with the same email address already exists in the course.";
         public static final String COURSE_INSTRUCTOR_EDITED = "The changes to the instructor has been updated.";
+        
+        //Modificacion para instructorCourseEditSave
+        public static final String COURSE_INSTRUCTOR_EDITED_SAVE = "The changes to the Course has been updated.";
+        public static final String COURSE_INSTRUCTOR_ESPECIALCHARACTER= "Don't use especial characteres";
+        public static final String COURSE_NAME_EMPTY = "Course's name cannot be empty.";
+        //FIN modificacion
+        
         public static final String COURSE_INSTRUCTOR_DELETED = "The instructor has been deleted from the course.";
         public static final String COURSE_INSTRUCTOR_DELETE_NOT_ALLOWED = "The instructor you are trying to delete is the last instructor in the course. "
                 + "Deleting the last instructor from the course is not allowed.";
@@ -844,6 +891,10 @@ public class Const {
         
         public static final String STUDENT_EDITED = "The student has been edited successfully";
         public static final String STUDENT_DELETED = "The student has been removed from the course";
+        
+        //Modificacion Usca
+        public static final String ALL_STUDENTS_DELETED = "The students has been removed from the course";
+        
         public static final String STUDENT_EMAIL_CONFLIT = "Trying to update to an email that is already used by: ";
         public static final String STUDENT_PROFILE_EDITED = "Your profile has been edited successfully";
         public static final String STUDENT_PROFILE_PICTURE_SAVED = "Your profile picture has been saved successfully";
@@ -897,8 +948,6 @@ public class Const {
         public static final String FEEDBACK_RESPONSE_COMMENT_ADDED = "Your comment has been saved successfully";
         public static final String FEEDBACK_RESPONSE_COMMENT_EDITED = "Your changes has been saved successfully";
         public static final String FEEDBACK_RESPONSE_COMMENT_DELETED = "Your comment has been deleted successfully";
-        public static final String FEEDBACK_RESPONSE_INVALID_RECIPIENT = "Trying to update recipient to an invalid recipient for question %d.";
-        public static final String FEEDBACK_RESPONSE_RECIPIENT_ALREADY_EXISTS = "Error trying to update recipient for response, as another response with the same recipient already exists.";
         
         public static final String FEEDBACK_SUBMISSIONS_NOT_OPEN = "You can view the questions and any submitted responses for this feedback session but cannot submit new responses as the session is not currently open for submission.";
         public static final String FEEDBACK_SUBMISSION_EXCEEDED_DEADLINE = "<strong>Submission Failure!</strong> You have exceeded the submission deadline.";
@@ -947,8 +996,6 @@ public class Const {
         public static final String INSTRUCTOR_REMOVED_FROM_COURSE = "The Instructor has been removed from the Course";
         
         public static final String INSTRUCTOR_COURSE_EMPTY = "There are no students in this course";
-        public static final String INSTRUCTOR_PERSISTENCE_ISSUE = "Account creation is still in progress. Please reload the page"
-                + " after sometime.";
         public static final String INSTRUCTOR_NO_COURSE_AND_STUDENTS = "There are no course or students information to be displayed";
         public static final String INSTRUCTOR_NO_STUDENT_RECORDS = "No records were found for this student";
         

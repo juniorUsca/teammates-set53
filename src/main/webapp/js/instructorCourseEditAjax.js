@@ -9,7 +9,6 @@ function editFormRequest(e){
 	var index = $(this).attr("id").replace("instrEditLink", "");
 	var editForm = $("#accessControlEditDivForInstr" + index);
 	var saveButton = $("#btnSaveInstructor" + index);
-
 	$.ajax({
 		type : 'POST',
         cache: false,
@@ -35,8 +34,10 @@ function editFormRequest(e){
 
 }
 
+
 $(document).ready(function(){
     var editLinks = $("a[id^=instrEditLink]");
     instructorSize = editLinks.length;
     $(editLinks).click(editFormRequest);
+    
 });

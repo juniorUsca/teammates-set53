@@ -40,7 +40,7 @@ public class PageData {
      *    May not be the logged in user (under masquerade mode) */
     public AccountAttributes account;
     public StudentAttributes student;
-
+    
     /**
      * @param account The account for the nominal user.
      */
@@ -332,6 +332,24 @@ public class PageData {
         return link;
     }
     
+    //-- ---------------- Modificaciones-------------------------- -->
+    
+    /**
+     * @return La ruta de acceso relativa a la página de cursos. 
+     * El ID de usuario se codifica en la url como parámetro.
+     */
+    public String getStudentCoursesLink(boolean isUnregistered) {
+        String link = Const.ActionURIs.STUDENT_COURSES_PAGE;
+        link = addUserIdToUrl(link);
+        if (isUnregistered) {
+            link = Url.addParamToUrl(student.getRegistrationUrl(), 
+                    Const.ParamsNames.NEXT_URL, link);
+        }
+        return link;
+    }
+    
+    //-- ----------------FIN Modificaciones-------------------------- -->
+    
     @SuppressWarnings("unused")
     private void ___________methods_to_generate_instructor_links(){
     //========================================================================    
@@ -412,6 +430,19 @@ public class PageData {
         link = addUserIdToUrl(link);
         return link;
     }
+    
+    //Modificacion: Editar el curso
+    public String getInstructorCourseEditLink(String courseId, boolean isHome){
+        String link = Const.ActionURIs.INSTRUCTOR_COURSE_ONLY_EDIT_PAGE;
+        link = Url.addParamToUrl(link,Const.ParamsNames.COURSE_ID,courseId);
+        link = Url.addParamToUrl(
+                link,
+                Const.ParamsNames.NEXT_URL,(isHome? Const.ActionURIs.INSTRUCTOR_HOME_PAGE : Const.ActionURIs.INSTRUCTOR_COURSES_PAGE));
+        link = addUserIdToUrl(link);
+        return link;
+    }
+    
+  
     
     public String getInstructorCourseArchiveLink(String courseId, boolean archiveStatus, boolean isHome) {
         String link = Const.ActionURIs.INSTRUCTOR_COURSE_ARCHIVE;

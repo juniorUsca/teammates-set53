@@ -27,8 +27,8 @@ import teammates.storage.entity.Account;
 import teammates.storage.entity.StudentProfile;
 
 /**
- * Handles CRUD Operations for accounts.
- * The API uses data transfer classes (i.e. *Attributes) instead of persistable classes.
+ * Manejar operaciones CRUD para las cuentas.
+ * La API utiliza clases de transferencia de datos (es decir, * Atributos) en lugar de las clases con persistencia.
  * 
  */
 public class AccountsDb extends EntitiesDb {
@@ -36,33 +36,33 @@ public class AccountsDb extends EntitiesDb {
     private static final Logger log = Utils.getLogger();
     
     /**
-     * Preconditions: 
-     * <br> * {@code accountToAdd} is not null and has valid data.
+     * Precondiciones: 
+     * <br> * {@code accountToAdd} no es nulo y tiene datos válidos.
      */
     public void createAccount(AccountAttributes accountToAdd) 
             throws InvalidParametersException {
-        // TODO: use createEntity once there is a proper way to add instructor accounts.
+        // TODO: utilizar createEntity una vez haya una forma correcta de agregar cuentas de instructor.
         try {
-            // this is for legacy code to be handled
+            // esto es para código heredado a manipular
             if (accountToAdd != null && accountToAdd.studentProfile == null) {
                 accountToAdd.studentProfile = new StudentProfileAttributes();
                 accountToAdd.studentProfile.googleId = accountToAdd.googleId;
             }
             createEntity(accountToAdd);
         } catch (EntityAlreadyExistsException e) {
-            // We update the account instead if it already exists. This is due to how
-            // adding of instructor accounts work.
+            // Actualizamos la cuenta una vez si ya existe. Esto es debido a cómo
+            // la adición de las cuentas de instructor de trabajo.
             try {
                 updateAccount(accountToAdd, true);
             } catch (EntityDoesNotExistException edne) {
-                // This situation is not tested as replicating such a situation is 
-                // difficult during testing
+                // Esta situación no se ha probado como la replicación de tal situación 
+                // es difícil durante la prueba
                 Assumption.fail("Entity found be already existing and not existing simultaneously");
             }
         }
     }
     
-    /* This function is used for persisting data bundle in testing process */
+    /* Esta función se utiliza para persistir paquete de datos en proceso de prueba */
     public void createAccounts(Collection<AccountAttributes> accountsToAdd, boolean updateAccount) throws InvalidParametersException{
         
         List<EntityAttributes> accountsToUpdate = createEntities(accountsToAdd);
@@ -72,8 +72,8 @@ public class AccountsDb extends EntitiesDb {
                 try {
                     updateAccount(account, true);
                 } catch (EntityDoesNotExistException e) {
-                 // This situation is not tested as replicating such a situation is 
-                 // difficult during testing
+                 // Esta situación no se ha probado como la replicación de tal situación 
+                 // es difícil durante la prueba
                     Assumption.fail("Entity found be already existing and not existing simultaneously");
                 }
             }
@@ -81,11 +81,11 @@ public class AccountsDb extends EntitiesDb {
     }
     
     /**
-     * Gets the data transfer version of the account. Does not retrieve the profile
-     * if the given parameter is false<br>
-     * Preconditions: 
-     * <br> * All parameters are non-null. 
-     * @return Null if not found.
+     * Obtiene la versión de la transferencia de datos de la cuenta. No recuperar el perfil
+     * si el parámetro dado es falsa<br>
+     * Precondiciones: 
+     * <br> * Todos los parámetros son no nulo. 
+     * @return Null si no se encontro.
      */
     public AccountAttributes getAccount(String googleId, boolean retrieveStudentProfile) {
         Assumption.assertNotNull(Const.StatusCodes.DBLEVEL_NULL_INPUT, googleId);
@@ -106,8 +106,8 @@ public class AccountsDb extends EntitiesDb {
     }
 
     /**
-     * @return {@link AccountAttribute} objects for all accounts with instructor privileges.
-     *   Returns an empty list if no such accounts are found.
+     * @return {@link AccountAttribute} objetos para todas las cuentas con privilegios de instructor.
+     *   Devuelve una lista vacía si no se encuentran este tipo de cuentas.
      */
     public List<AccountAttributes> getInstructorAccounts() {
         Query q = getPM().newQuery(Account.class);
@@ -126,8 +126,8 @@ public class AccountsDb extends EntitiesDb {
     }
 
     /**
-     * Preconditions: 
-     * <br> * {@code accountToAdd} is not null and has valid data.
+     * Precondiciones: 
+     * <br> * {@code accountToAdd} no es nulo y tiene datos válidos.
      */
     public void updateAccount(AccountAttributes a, boolean updateStudentProfile) 
             throws InvalidParametersException, EntityDoesNotExistException {
@@ -174,10 +174,10 @@ public class AccountsDb extends EntitiesDb {
     }
 
     /**
-     * Note: This is a non-cascade delete. <br>
-     *   <br> Fails silently if there is no such account.
-     * <br> Preconditions: 
-     * <br> * {@code googleId} is not null.
+     * Note: Esto no es una eliminación en cascada. <br>
+     *   <br> Falla silenciosamente si no hay tal cuenta.
+     * <br> Precondiciones: 
+     * <br> * {@code googleId} no es null.
      */
     public void deleteAccount(String googleId) {
         Assumption.assertNotNull(Const.StatusCodes.DBLEVEL_NULL_INPUT, googleId);
@@ -216,8 +216,8 @@ public class AccountsDb extends EntitiesDb {
                 return null;
             } else if (retrieveStudentProfile) {
                 if (account.getStudentProfile() == null) {
-                    // This situation cannot be reproduced and hence not tested
-                    // This only happens when existing data in the store do not have a profile 
+                    // Esta situación no puede ser reproducido y, por tanto, no han sido evaluados
+                    // Esto sólo ocurre cuando los datos existentes en el almacén no tienen un perfil
                     account.setStudentProfile(new StudentProfile(account.getGoogleId()));
                 }
             }

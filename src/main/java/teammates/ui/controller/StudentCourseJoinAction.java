@@ -25,8 +25,9 @@ public class StudentCourseJoinAction extends Action {
         String nextUrl = getNextUrl();
         
         statusToAdmin = "Action Student Clicked Join Link"
-                        + (account.googleId == null ? "<br/>Email: " + account.email   
-                                                    : "<br/>Google ID: " + account.googleId + "<br/>Key: " + regkey);
+                + account.googleId == null ? "<br/>Email: " + account.email   
+                        : "<br/>Google ID: " + account.googleId
+                + "<br/>Key: " + regkey;
         
         if (logic.getCurrentUser() == null) {
             return createRedirectToAuthenticatedJoinPage(nextUrl);

@@ -10,8 +10,6 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import teammates.common.util.Const;
-import teammates.common.util.Utils;
-import teammates.logic.core.TeamEvalResult;
 import teammates.ui.controller.PageData;
 
 /**
@@ -42,11 +40,9 @@ public class FeedbackSessionResultsBundle implements SessionResultsBundle{
 
     //For contribution questions.
     //Key is questionId, value is a map of student email to StudentResultSumary
-    public Map<String, Map<String, StudentResultSummary>> contributionQuestionStudentResultSummary =
+    public Map<String, Map<String, StudentResultSummary>> contributionQuestionStats =
             new HashMap<String, Map<String, StudentResultSummary>>();
-    //Key is questionId, value is a map of team name to TeamEvalResult
-    public Map<String, Map<String, TeamEvalResult>> contributionQuestionTeamEvalResults =
-            new HashMap<String, Map<String, TeamEvalResult>>();
+
     
     public FeedbackSessionResultsBundle (FeedbackSessionAttributes feedbackSession,
             List<FeedbackResponseAttributes> responses,
@@ -175,61 +171,17 @@ public class FeedbackSessionResultsBundle implements SessionResultsBundle{
     /**
      * Used for instructor feedback results views.
      */
+    @SuppressWarnings("static-access")
     public String getResponseAnswerHtml(FeedbackResponseAttributes response, FeedbackQuestionAttributes question){
         FeedbackAbstractQuestionDetails questionDetails = question.getQuestionDetails();
         if(question.questionType == FeedbackQuestionType.CONTRIB){
-            return getContributionQuestionResponseAnswerHtml(response,
-                    question, questionDetails);
-        } else {
-            return response.getResponseDetails().getAnswerHtml(questionDetails);
-        }
-    }
-
-    private String getContributionQuestionResponseAnswerHtml(
-            FeedbackResponseAttributes response,
-            FeedbackQuestionAttributes question,
-            FeedbackAbstractQuestionDetails questionDetails) {
-        Map<String, TeamEvalResult> teamResults = getContribQnTeamEvalResult(question);
-        Map<String, StudentResultSummary> stats = getContribQnStudentResultSummary(question);
-        
-        // Need to get actual team name and giver/recipient emails here,
-        // only for getting the responseAnswer.
-        FeedbackResponseAttributes actualResponse = getActualResponse(response);
-        String giverTeamName = emailTeamNameTable.get(actualResponse.giverEmail);
-        TeamEvalResult teamResult = teamResults.get(giverTeamName);
-        
-        int giverIndex = teamResult.studentEmails.indexOf(actualResponse.giverEmail);
-        int recipientIndex = teamResult.studentEmails.indexOf(actualResponse.recipientEmail);
-        
-        
-        String responseAnswerHtml = "";
-        
-        if (giverIndex == -1 || recipientIndex == -1) {
-            if (giverIndex == -1) {
-                Utils.getLogger().severe("getContributionQuestionResponseAnswerHtml - giverIndex is -1\n"
-                        + "Cannot find giver: " + actualResponse.giverEmail + "\n"
-                        + "CourseId: " + feedbackSession.courseId + "\n"
-                        + "Session Name: " + feedbackSession.feedbackSessionName + "\n"
-                        + "Response Id: " + actualResponse.getId());
-            }
-            if (recipientIndex == -1) {
-                Utils.getLogger().severe("getContributionQuestionResponseAnswerHtml - recipientIndex is -1\n"
-                        + "Cannot find recipient: " + actualResponse.recipientEmail + "\n"
-                        + "CourseId: " + feedbackSession.courseId + "\n"
-                        + "Session Name: " + feedbackSession.feedbackSessionName + "\n"
-                        + "Response Id: " + actualResponse.getId());
-            }
-        } else {
-            responseAnswerHtml = FeedbackContributionQuestionDetails.convertToEqualShareFormatHtml(
-                    teamResult.normalizedPeerContributionRatio[giverIndex][recipientIndex]);
-    
+            String responseAnswerHtml = response.getResponseDetails().getAnswerHtml(questionDetails);
             if(response.giverEmail.equals(response.recipientEmail)){
                 //For CONTRIB qns, We want to show PC if giver == recipient.
-                responseAnswerHtml = response.getResponseDetails().getAnswerHtml(questionDetails);
+                Map<String, StudentResultSummary> stats = getContribQnStats(question);
                 StudentResultSummary studentResult = stats.get(response.giverEmail);
                 if(studentResult != null){
                     int pc = studentResult.perceivedToInstructor;
-                    @SuppressWarnings("static-access")
                     String pcHtml = ((FeedbackContributionQuestionDetails) questionDetails).convertToEqualShareFormatHtml(pc);
                     responseAnswerHtml += "<span>&nbsp;&nbsp;["
                             + "Perceived Contribution: "
@@ -237,27 +189,14 @@ public class FeedbackSessionResultsBundle implements SessionResultsBundle{
                             + "]</span>";
                 }
             }
+            return responseAnswerHtml;
+        } else {
+            return response.getResponseDetails().getAnswerHtml(questionDetails);
         }
-        
-         
-                
-        return responseAnswerHtml;
-    }
-
-    private FeedbackResponseAttributes getActualResponse(
-            FeedbackResponseAttributes response) {
-        FeedbackResponseAttributes actualResponse = null;
-        for (FeedbackResponseAttributes resp : actualResponses) {
-            if (resp.getId().equals(response.getId())) {
-                actualResponse = resp;
-                break;
-            }
-        }
-        return actualResponse;
     }
     
-    private Map<String, StudentResultSummary> getContribQnStudentResultSummary(FeedbackQuestionAttributes question) {
-        Map<String, StudentResultSummary> contribQnStats = contributionQuestionStudentResultSummary.get(question.getId());
+    private Map<String, StudentResultSummary> getContribQnStats(FeedbackQuestionAttributes question) {
+        Map<String, StudentResultSummary> contribQnStats = contributionQuestionStats.get(question.getId());
         if(contribQnStats == null){
             FeedbackContributionQuestionDetails fqcd = (FeedbackContributionQuestionDetails) question.getQuestionDetails();
             contribQnStats = fqcd.getStudentResults(this, question);
@@ -273,18 +212,7 @@ public class FeedbackSessionResultsBundle implements SessionResultsBundle{
                 }
             }
             
-            contributionQuestionStudentResultSummary.put(question.getId(), contribQnStats);
-        }
-        
-        return contribQnStats;
-    }
-    
-    private Map<String, TeamEvalResult> getContribQnTeamEvalResult(FeedbackQuestionAttributes question) {
-        Map<String, TeamEvalResult> contribQnStats = contributionQuestionTeamEvalResults.get(question.getId());
-        if(contribQnStats == null){
-            FeedbackContributionQuestionDetails fqcd = (FeedbackContributionQuestionDetails) question.getQuestionDetails();
-            contribQnStats = fqcd.getTeamEvalResults(this, question);
-            contributionQuestionTeamEvalResults.put(question.getId(), contribQnStats);
+            contributionQuestionStats.put(question.getId(), contribQnStats);
         }
         
         return contribQnStats;

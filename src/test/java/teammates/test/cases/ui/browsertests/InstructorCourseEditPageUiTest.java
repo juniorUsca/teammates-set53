@@ -1,7 +1,5 @@
 package teammates.test.cases.ui.browsertests;
 
-import static org.testng.AssertJUnit.assertFalse;
-import static org.testng.AssertJUnit.assertTrue;
 import static org.testng.AssertJUnit.assertEquals;
 import static org.testng.AssertJUnit.assertNotNull;
 
@@ -58,9 +56,6 @@ public class InstructorCourseEditPageUiTest extends BaseUiTestCase {
         testAddInstructorAction();
         testEditInstructorAction();
         testDeleteInstructorAction();
-        
-        testUnregisteredInstructorEmailNotEditable();
-        
         testDeleteCourseAction();
 
     }
@@ -83,7 +78,7 @@ public class InstructorCourseEditPageUiTest extends BaseUiTestCase {
     private void testEditInstructorLink() {
         
         ______TS("edit instructor link");
-        assertEquals(true, courseEditPage.clickEditInstructorLink(1));
+        assertEquals(true, courseEditPage.clickEditInstructorLink());
     }
 
     private void testNewInstructorLink() {
@@ -168,7 +163,7 @@ public class InstructorCourseEditPageUiTest extends BaseUiTestCase {
         
         ______TS("success: edit an instructor--viewing instructor permission details");
         
-        assertEquals(true, courseEditPage.clickEditInstructorLink(1));
+        assertEquals(true, courseEditPage.clickEditInstructorLink());
         // this should be click co-owner role
         courseEditPage.clickViewDetailsLinkForInstructor(1, 1);
         // what for the animation to finish
@@ -254,19 +249,6 @@ public class InstructorCourseEditPageUiTest extends BaseUiTestCase {
         InstructorCoursesPage coursePage = 
                 courseEditPage.clickDeleteCourseLinkAndConfirm();
         coursePage.verifyContains("Add New Course");
-    }
-    
-    private void testUnregisteredInstructorEmailNotEditable() {
-        courseEditPage = getCourseEditPage();
-        ______TS("make a new unregistered instructor and test that its email can't be edited");
-        courseEditPage.addNewInstructor("Unreg Instructor", "InstructorCourseEditEmail@gmail.tmt");
-        
-        assertEquals("Unreg Instructor", courseEditPage.getNameField(3).getAttribute("value"));
-        assertFalse(courseEditPage.getNameField(3).isEnabled());
-        
-        assertTrue(courseEditPage.clickEditInstructorLink(3));
-        assertEquals("true", courseEditPage.getEmailField(3).getAttribute("readonly"));
-        assertTrue(courseEditPage.getNameField(3).isEnabled());
     }
     
     private InstructorCourseEditPage getCourseEditPage() {        

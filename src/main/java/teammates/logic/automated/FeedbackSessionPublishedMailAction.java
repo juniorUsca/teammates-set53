@@ -12,7 +12,6 @@ import teammates.common.datatransfer.FeedbackSessionAttributes;
 import teammates.common.exception.EntityDoesNotExistException;
 import teammates.common.exception.InvalidParametersException;
 import teammates.common.util.Assumption;
-import teammates.common.util.Const;
 import teammates.common.util.Const.ParamsNames;
 import teammates.common.util.HttpRequestHelper;
 import teammates.logic.core.Emails;
@@ -81,7 +80,7 @@ public class FeedbackSessionPublishedMailAction extends EmailAction {
     }
     
     private void initializeNameAndDescription() {
-        actionName = Const.AutomatedActionNames.AUTOMATED_FEEDBACKSESSION_PUBLISHED_MAIL_ACTION;
+        actionName = "feedbackSessionPublishedMailAction";
         actionDescription = "send published alert";
     }
 }

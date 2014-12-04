@@ -43,8 +43,8 @@ public abstract class EntitiesDb {
     private static final Logger log = Utils.getLogger();
     
     /**
-     * Preconditions: 
-     * <br> * {@code entityToAdd} is not null and has valid data.
+     * Precondiciones: 
+     * <br> * {@code entityToAdd} no es nulo y tiene datos válidos.
      */
     public Object createEntity(EntityAttributes entityToAdd) 
             throws InvalidParametersException, EntityAlreadyExistsException {
@@ -58,8 +58,8 @@ public abstract class EntitiesDb {
             throw new InvalidParametersException(entityToAdd.getInvalidityInfo());
         }
         
-        // TODO: Do we really need special identifiers? Can just use ToString()? 
-        // Answer: Yes. We can use toString.
+        // TODO: ¿Realmente necesitamos identificadores especiales? Podemos solo usar ToString()? 
+        // Respuesta: si. Nosostros podemos usar toString.
         if (getEntity(entityToAdd) != null) {
             String error = String.format(ERROR_CREATE_ENTITY_ALREADY_EXISTS, entityToAdd.getEntityTypeAsString())
                     + entityToAdd.getIdentificationString();
@@ -71,7 +71,7 @@ public abstract class EntitiesDb {
         getPM().makePersistent(entity);
         getPM().flush();
 
-        // Wait for the operation to persist
+        // Espere a que la operación persista
         int elapsedTime = 0;
         Object createdEntity = getEntity(entityToAdd);
         if(Config.PERSISTENCE_CHECK_DURATION > 0){
@@ -79,7 +79,7 @@ public abstract class EntitiesDb {
                     && (elapsedTime < Config.PERSISTENCE_CHECK_DURATION)) {
                 ThreadHelper.waitBriefly();
                 createdEntity = getEntity(entityToAdd);
-                //check before incrementing to avoid boundary case problem
+                //comprobar antes de incrementar para evitar problema caso límite
                 if (createdEntity == null) {
                     elapsedTime += ThreadHelper.WAIT_DURATION;
                 }
@@ -90,7 +90,7 @@ public abstract class EntitiesDb {
                         + entityToAdd.getIdentificationString());
             }
         }
-        return entity;
+        return createdEntity;
     }
     
     public List<EntityAttributes> createEntities(Collection<? extends EntityAttributes> entitiesToAdd) throws InvalidParametersException {
@@ -123,10 +123,10 @@ public abstract class EntitiesDb {
 
     
     /**
-     * Warning: Do not use this method unless a previous update might cause
-     * adding of the new entity to fail due to EntityAlreadyExists exception
-     * Preconditions: 
-     * <br> * {@code entityToAdd} is not null and has valid data.
+     * Advertencia: No utilice este método a menos que una actualización anterior podría causar 
+     * la adición de la nueva entidad a fallar debido a excepción EntityAlreadyExists
+     * Precondiciones: 
+     * <br> * {@code entityToAdd} no es nulo y tiene datos válidos.
      */
     public void createEntityWithoutExistenceCheck(EntityAttributes entityToAdd) 
             throws InvalidParametersException {
@@ -144,7 +144,7 @@ public abstract class EntitiesDb {
         getPM().makePersistent(entity);
         getPM().flush();
 
-        // Wait for the operation to persist
+        // Espere a que la operación persista
         if(Config.PERSISTENCE_CHECK_DURATION > 0){
             int elapsedTime = 0;
             Object entityCheck = getEntity(entityToAdd);
@@ -152,7 +152,7 @@ public abstract class EntitiesDb {
                     && (elapsedTime < Config.PERSISTENCE_CHECK_DURATION)) {
                 ThreadHelper.waitBriefly();
                 entityCheck = getEntity(entityToAdd);
-                //check before incrementing to avoid boundary case problem
+                //comprobar antes de incrementar para evitar problema caso límite
                 if (entityCheck == null) {
                     elapsedTime += ThreadHelper.WAIT_DURATION;
                 }
@@ -165,12 +165,12 @@ public abstract class EntitiesDb {
         }
     }
     
-    // TODO: use this method for subclasses.
+    // TODO: usar este método para subclasses.
     /**
-     * Note: This is a non-cascade delete.<br>
-     *   <br> Fails silently if there is no such object.
-     * <br> Preconditions: 
-     * <br> * {@code courseId} is not null.
+     * Note: Esto no es una eliminación en cascada.<br>
+     *   <br> Falla en silencio si no hay tal objeto.
+     * <br> Precondiciones: 
+     * <br> * {@code courseId} no es null.
      */
     public void deleteEntity(EntityAttributes entityToDelete) {
         Assumption.assertNotNull(Const.StatusCodes.DBLEVEL_NULL_INPUT, entityToDelete);
@@ -184,7 +184,7 @@ public abstract class EntitiesDb {
         getPM().deletePersistent(entity);
         getPM().flush();
         
-        // wait for the operation to persist
+        // esperar a que la operación persista
         if(Config.PERSISTENCE_CHECK_DURATION > 0){
             int elapsedTime = 0;
             Object entityCheck = getEntity(entityToDelete);
@@ -192,7 +192,7 @@ public abstract class EntitiesDb {
                     && (elapsedTime < Config.PERSISTENCE_CHECK_DURATION)) {
                 ThreadHelper.waitBriefly();
                 entityCheck = getEntity(entityToDelete);
-                //check before incrementing to avoid boundary case problem
+                //comprobar antes de incrementar para evitar problema caso límite
                 if (entityCheck == null) {
                     elapsedTime += ThreadHelper.WAIT_DURATION;
                 }
@@ -239,11 +239,11 @@ public abstract class EntitiesDb {
     }
     
     /**
-     * NOTE: This method must be overriden for all subclasses such that it will return the Entity
-     * matching the EntityAttributes in the parameter.
-     * @return    the Entity which matches the given {@link EntityAttributes} {@code attributes}
-     *             based on the default key identifiers. Returns null if it 
-     *             does not already exist in the Datastore. 
+     * NOTE: Este método debe ser sobreescrito para todas las subclases tales que le proporcione
+     * la Entidad coincidir los EntityAttributes en el parámetro.
+     * @return    la Entidad que coincide con la dada {@link EntityAttributes} {@code attributes}
+     *             basado en los identificadores de clave predeterminada. Devuelve null si
+     *             no existe ya en el almacén de datos. 
      */
     protected abstract Object getEntity(EntityAttributes attributes) ;
     
@@ -251,7 +251,7 @@ public abstract class EntitiesDb {
         return Datastore.getPersistenceManager();
     }
     
-    //the followings APIs are used by Teammates' search engine
+    //las API siguientes son utilizados por los motores de búsqueda Teammates
     protected void putDocument(String indexName, SearchDocument document){
         try{
             SearchManager.putDocument(indexName, document.build());

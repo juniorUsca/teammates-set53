@@ -46,6 +46,16 @@ function submitFormAjax() {
     });
 }
 
+/**
+ * Function that shows confirmation dialog for removing all students from a course
+ * @param courseID
+ * @returns
+ */
+function toggleDeleteAllStudentsConfirmation(courseID) {
+    return true;/*confirm("Are you sure you want to remove all students from " +
+            "the course?");*/
+}
+
 
 /**
  * Functions to trigger registration key sending to a specific student in the

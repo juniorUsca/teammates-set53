@@ -26,6 +26,8 @@ public class InstructorCourseEditPageData extends PageData {
     public List<String> feedbackNames;
     public int index;
     public boolean isAccessControlDisplayed;
+    //modificacion
+    public boolean display_courseEdit;
 
     public String getInstructorCourseInstructorEditLink(String courseId, String instructorId) {
         String link = Const.ActionURIs.INSTRUCTOR_COURSE_INSTRUCTOR_EDIT_SAVE;

@@ -31,6 +31,12 @@ public class InstructorCourseDetailsPageData extends PageData {
         link = addUserIdToUrl(link);
         return link;
     }
+    public String getCourseDeleteAllStudentsLink(){
+        String link = Const.ActionURIs.INSTRUCTOR_COURSE_DELETE_ALL_STUDENTS;
+        link = Url.addParamToUrl(link,Const.ParamsNames.COURSE_ID,courseDetails.course.id);
+        link = addUserIdToUrl(link);
+        return link;
+    }
     
     
     public String getCourseStudentDetailsLink(StudentAttributes student){

@@ -1,7 +1,7 @@
-<%@ page import="teammates.common.util.Const" %>
+<%@ page import="teammates.common.util.Const"%>
 <html>
 <head>
-    <script>
+<script>
         if(typeof opener != 'undefined' || typeof opener != null){
             opener.setStatusMessage("<%=request.getParameter(Const.ParamsNames.STATUS_MESSAGE)%>",<%=request.getParameter(Const.ParamsNames.ERROR)%>);
             top.close();
@@ -27,7 +27,7 @@
         }
     </script>
 </head>
-<body>
-This browser window is expected to close automatically (if JavaSrcipt is enabled). If it doesn't, you may close it manually.
+<body>This browser window is expected to close automatically (if
+	JavaSrcipt is enabled). If it doesn't, you may close it manually.
 </body>
 </html>

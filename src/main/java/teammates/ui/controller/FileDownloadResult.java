@@ -40,7 +40,6 @@ public class FileDownloadResult extends ActionResult {
         resp.setContentType("text/csv; charset=UTF-8");
         resp.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + ".csv\"");
         PrintWriter writer = resp.getWriter();
-        writer.write("\uFEFF");
         writer.append(fileContent);
     }
     

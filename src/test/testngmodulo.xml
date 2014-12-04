@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Test Suite" parallel="tests" thread-count="1">
+
+	<test name="Test de  Modulos">
+		<!--Theses cases need to be run sequentially to avoid state leaks between 
+			tests -->
+		<listeners>
+			<listener class-name="teammates.test.util.PriorityInterceptor" />
+		</listeners>
+		<classes>
+			<class name="teammates.test.cases.ui.browsertests.StudentCoursePageUiTest" />
+			<class name="teammates.test.cases.ui.browsertests.StudentHomePageUiTest" />
+		</classes>
+	</test>
+
+</suite> 

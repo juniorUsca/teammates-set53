@@ -1,18 +1,20 @@
-Hello ${userName},
+Hello ${userName}, ${joinFragment}
 
-${joinFragment}
+<p />
+Ha recivido nuevos comentarios sobre el siguiente curso.
+<br>
+&nbsp;&nbsp; Course: [${courseId}]${courseName}
+<br>
+<br>
+<strong>Para ver los comentarios, por favor vaya a la página de
+	comentarios para estudiante, o a esta dirección Web: </strong>
+<a href="${commentsPageUrl}">${commentsPageUrl}</a>
 
-<p/>
-You have received new comments for the following course.
-<br>&nbsp;&nbsp; Course: [${courseId}]${courseName}
+<p />
+Si tiene algún problema al utilizar el sistema, puede enviar un correo
+electrónico al equipo de soportede TEAMMATES escribiendo a
+teammates@comp.nus.edu.sg
+<p />
+Saludos,
 <br>
-<br>
-<strong>To view the comments, please go to the comments page for student, or this Web address: </strong><a href="${commentsPageUrl}">${commentsPageUrl}</a>
-<br/>*The above link is unique to you. Please do not share it with others.
-<br/>
-<p/>
-If you encounter any problems when using the system, you can email TEAMMATES support team at teammates@comp.nus.edu.sg
-<p/>
-Regards, 
-<br>
-TEAMMATES Team.
+Equipo de TEAMMATES.

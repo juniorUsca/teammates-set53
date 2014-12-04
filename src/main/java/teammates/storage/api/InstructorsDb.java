@@ -48,20 +48,13 @@ public class InstructorsDb extends EntitiesDb{
         if(instructor.key == null){
             instructor = this.getInstructorForEmail(instructor.courseId, instructor.email);
         }
-        // defensive coding for legacy data
-        if(instructor.key != null) {
-            putDocument(Const.SearchIndex.INSTRUCTOR, new InstructorSearchDocument(instructor));
-        }
+        putDocument(Const.SearchIndex.INSTRUCTOR, new InstructorSearchDocument(instructor));
     }
     
     public void deleteDocument(InstructorAttributes instructorToDelete){
         if(instructorToDelete.key == null){
             InstructorAttributes instructor = this.getInstructorForEmail(instructorToDelete.courseId, instructorToDelete.email);
-            
-            // handle legacy data which do not have key attribute (key == null)
-            if(instructor.key != null) {
-                deleteDocument(Const.SearchIndex.INSTRUCTOR, StringHelper.encrypt(instructor.key));
-            }
+            deleteDocument(Const.SearchIndex.INSTRUCTOR, StringHelper.encrypt(instructor.key));
         } else {
             deleteDocument(Const.SearchIndex.INSTRUCTOR, StringHelper.encrypt(instructorToDelete.key));
         }
@@ -117,12 +110,8 @@ public class InstructorsDb extends EntitiesDb{
         }
     }
     
-    public InstructorAttributes createInstructor(InstructorAttributes instructorToAdd) throws InvalidParametersException, EntityAlreadyExistsException{  
-        Instructor instructor = (Instructor)createEntity(instructorToAdd);
-        if(instructor == null) {
-            throw new InvalidParametersException("Created instructor is null.");
-        }
-        InstructorAttributes createdInstructor = new InstructorAttributes(instructor);
+    public InstructorAttributes createInstructor(InstructorAttributes instructorToAdd) throws InvalidParametersException, EntityAlreadyExistsException{     
+        InstructorAttributes createdInstructor = new InstructorAttributes((Instructor)createEntity(instructorToAdd));
         putDocument(createdInstructor);
         return createdInstructor;
     }

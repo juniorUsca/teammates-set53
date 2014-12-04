@@ -13,7 +13,7 @@ $(document).ready(function(){
         }
     });
 });
-	
+
 /**
  * Go to the url with appended param and value pair
  */

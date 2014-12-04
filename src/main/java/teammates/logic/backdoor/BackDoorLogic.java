@@ -183,10 +183,6 @@ public class BackDoorLogic extends Logic {
         }
         frDb.createFeedbackResponses(responses.values());
         
-        for(FeedbackSessionAttributes session : sessions.values()){
-            updateRespondants(session.feedbackSessionName, session.courseId);
-        }
-        
         HashMap<String, FeedbackResponseCommentAttributes> responseComments = dataBundle.feedbackResponseComments;
         for (FeedbackResponseCommentAttributes responseComment : responseComments.values()) {
             responseComment = injectRealIds(responseComment);
@@ -199,8 +195,6 @@ public class BackDoorLogic extends Logic {
         // any Db can be used to commit the changes. 
         // Eval is used as it is already used in the file
         new EvaluationsDb().commitOutstandingChanges();
-
-        
         
         return Const.StatusCodes.BACKDOOR_STATUS_SUCCESS;
     }

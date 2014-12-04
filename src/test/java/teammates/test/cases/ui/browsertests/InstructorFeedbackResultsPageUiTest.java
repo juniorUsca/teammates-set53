@@ -68,11 +68,8 @@ public class InstructorFeedbackResultsPageUiTest extends BaseUiTestCase {
         
         ______TS("standard session results with helper view");
         
-        resultsPage = loginToInstructorFeedbackResultsPage("CFResultsUiT.helper1", "Open Session");
-        resultsPage.verifyHtmlMainContent("/instructorFeedbackResultsPageOpenWithHelperView1.html");
-        
-        resultsPage = loginToInstructorFeedbackResultsPage("CFResultsUiT.helper2", "Open Session");
-        resultsPage.verifyHtmlMainContent("/instructorFeedbackResultsPageOpenWithHelperView2.html");
+        resultsPage = loginToInstructorFeedbackResultsPage("CFResultsUiT.helper", "Open Session");
+        resultsPage.verifyHtmlMainContent("/instructorFeedbackResultsPageOpenWithHelperView.html");
         
         ______TS("empty session");
         
@@ -217,7 +214,7 @@ public class InstructorFeedbackResultsPageUiTest extends BaseUiTestCase {
         
         ______TS("Ajax for view by question for helper");
         
-        resultsPage = loginToInstructorFeedbackResultsPageWithViewType("CFResultsUiT.helper1", "Open Session", true, "question");
+        resultsPage = loginToInstructorFeedbackResultsPageWithViewType("CFResultsUiT.helper", "Open Session", true, "question");
         
         resultsPage.clickAjaxPanel(0);
         
@@ -233,7 +230,6 @@ public class InstructorFeedbackResultsPageUiTest extends BaseUiTestCase {
         
         ______TS("test view photo for view by giver > recipient > question");
         
-        resultsPage.removeNavBar();
         resultsPage.hoverClickAndViewStudentPhotoOnHeading(5, "studentProfilePic?studentemail={*}&courseid={*}&user=CFResultsUiT.instr");
         resultsPage.hoverAndViewStudentPhotoOnBody(5, "studentProfilePic?studentemail={*}&courseid={*}&user=CFResultsUiT.instr");
         resultsPage.click(By.id("panelHeading-5"));
@@ -250,7 +246,6 @@ public class InstructorFeedbackResultsPageUiTest extends BaseUiTestCase {
         
         ______TS("test view photo for view by giver > question > recipient");
         
-        resultsPage.removeNavBar();
         resultsPage.hoverClickAndViewStudentPhotoOnHeading(5, "studentProfilePic?studentemail={*}&courseid={*}&user=CFResultsUiT.instr");
         resultsPage.clickViewPhotoLink(5, "profile_picture_default.png");
         
@@ -263,7 +258,6 @@ public class InstructorFeedbackResultsPageUiTest extends BaseUiTestCase {
         
         ______TS("test view photo for view by recipient > question > giver");
         
-        resultsPage.removeNavBar();
         resultsPage.hoverClickAndViewStudentPhotoOnHeading(5, "studentProfilePic?studentemail={*}&courseid={*}&user=CFResultsUiT.instr");
         resultsPage.clickViewPhotoLink(5, "studentProfilePic?studentemail={*}&courseid={*}&user=CFResultsUiT.instr");
         
@@ -276,7 +270,6 @@ public class InstructorFeedbackResultsPageUiTest extends BaseUiTestCase {
         
         ______TS("test view photo for view by recipient > giver > question");
         
-        resultsPage.removeNavBar();
         resultsPage.hoverClickAndViewStudentPhotoOnHeading(5, "studentProfilePic?studentemail={*}&courseid={*}&user=CFResultsUiT.instr");
         resultsPage.hoverAndViewStudentPhotoOnBody(5, "studentProfilePic?studentemail={*}&courseid={*}&user=CFResultsUiT.instr");
         resultsPage.click(By.id("panelHeading-5"));
@@ -430,7 +423,7 @@ public class InstructorFeedbackResultsPageUiTest extends BaseUiTestCase {
         String afterReportDownloadUrl = browser.driver.getCurrentUrl();
         assertFalse(reportUrl.equals(afterReportDownloadUrl));
         //Get an error page due to missing parameters in URL
-        assertEquals(true, afterReportDownloadUrl.contains(Const.ActionURIs.INSTRUCTOR_HOME_PAGE));
+        assertEquals(true, afterReportDownloadUrl.contains("errorPage.jsp"));
         
         //return to the previous page
         loginToInstructorFeedbackResultsPage("CFResultsUiT.instr", "Open Session");

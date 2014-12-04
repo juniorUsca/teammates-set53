@@ -32,7 +32,7 @@ public class StudentCommentsPageAction extends Action {
     
     @Override
     protected ActionResult execute() throws EntityDoesNotExistException {
-
+       
         //check accessibility without courseId
         verifyBasicAccessibility();
         

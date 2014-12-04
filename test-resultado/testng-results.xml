@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="0" total="2" passed="2">
+	<reporter-output>
+	</reporter-output>
+	<suite name="Test Suite" duration-ms="35866" started-at="2014-10-21T20:42:17Z"
+		finished-at="2014-10-21T20:42:53Z">
+		<groups>
+		</groups>
+		<test name="Test de  Modulos" duration-ms="35866" started-at="2014-10-21T20:42:17Z"
+			finished-at="2014-10-21T20:42:53Z">
+			<class name="teammates.test.cases.ui.browsertests.StudentHomePageUiTest">
+				<test-method status="PASS"
+					signature="classSetup()[pri:0, instance:teammates.test.cases.ui.browsertests.StudentHomePageUiTest@4f6ac7f]"
+					name="classSetup" is-config="true" duration-ms="1571"
+					started-at="2014-10-21T15:42:46Z" finished-at="2014-10-21T15:42:47Z">
+					<reporter-output>
+					</reporter-output>
+				</test-method> <!-- classSetup -->
+				<test-method status="PASS"
+					signature="show_recent_only()[pri:0, instance:teammates.test.cases.ui.browsertests.StudentHomePageUiTest@4f6ac7f]"
+					name="show_recent_only" duration-ms="5696" started-at="2014-10-21T15:42:47Z"
+					finished-at="2014-10-21T15:42:53Z">
+					<reporter-output>
+					</reporter-output>
+				</test-method> <!-- show_recent_only -->
+				<test-method status="PASS"
+					signature="classTearDown()[pri:0, instance:teammates.test.cases.ui.browsertests.StudentHomePageUiTest@4f6ac7f]"
+					name="classTearDown" is-config="true" duration-ms="0"
+					started-at="2014-10-21T15:42:53Z" finished-at="2014-10-21T15:42:53Z">
+					<reporter-output>
+					</reporter-output>
+				</test-method> <!-- classTearDown -->
+			</class> <!-- teammates.test.cases.ui.browsertests.StudentHomePageUiTest -->
+			<class name="teammates.test.cases.ui.browsertests.StudentCoursePageUiTest">
+				<test-method status="PASS"
+					signature="classSetup()[pri:0, instance:teammates.test.cases.ui.browsertests.StudentCoursePageUiTest@271353e6]"
+					name="classSetup" is-config="true" duration-ms="11311"
+					started-at="2014-10-21T15:42:17Z" finished-at="2014-10-21T15:42:29Z">
+					<reporter-output>
+					</reporter-output>
+				</test-method> <!-- classSetup -->
+				<test-method status="PASS"
+					signature="show_auto_join()[pri:0, instance:teammates.test.cases.ui.browsertests.StudentCoursePageUiTest@271353e6]"
+					name="show_auto_join" duration-ms="17273" started-at="2014-10-21T15:42:29Z"
+					finished-at="2014-10-21T15:42:46Z">
+					<reporter-output>
+					</reporter-output>
+				</test-method> <!-- show_auto_join -->
+				<test-method status="PASS"
+					signature="classTearDown()[pri:0, instance:teammates.test.cases.ui.browsertests.StudentCoursePageUiTest@271353e6]"
+					name="classTearDown" is-config="true" duration-ms="1"
+					started-at="2014-10-21T15:42:46Z" finished-at="2014-10-21T15:42:46Z">
+					<reporter-output>
+					</reporter-output>
+				</test-method> <!-- classTearDown -->
+			</class> <!-- teammates.test.cases.ui.browsertests.StudentCoursePageUiTest -->
+		</test> <!-- Test de Modulos -->
+	</suite> <!-- Test Suite -->
+</testng-results>

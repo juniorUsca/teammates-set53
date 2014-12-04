@@ -50,6 +50,9 @@ public class InstructorCourseEditPageAction extends Action {
         data.sectionNames = logic.getSectionNamesForCourse(courseId);
         data.evalNames = new ArrayList<String>();
         data.feedbackNames = new ArrayList<String>();
+        //modificacion
+        data.display_courseEdit=true;
+        
         List<EvaluationAttributes> evaluations = logic.getEvaluationsForCourse(courseId);
         for (EvaluationAttributes eval : evaluations) {
             data.evalNames.add(eval.name);

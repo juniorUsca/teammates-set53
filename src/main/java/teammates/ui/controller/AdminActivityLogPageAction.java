@@ -42,11 +42,6 @@ public class AdminActivityLogPageAction extends Action {
 //      logs despite any action or change in the page unless the the page is reloaded with "?all=false" 
 //      or simply reloaded with this parameter omitted.
         data.ifShowAll = getRequestParamAsBoolean("all");
-        
-        
-//      This determines whether the logs related to testing data should be shown. Use "testdata=true" in URL
-//      to show all testing logs. This will keep showing all logs from testing data despite any action or change in the page
-//      unless the the page is reloaded with "?testdata=false"  or simply reloaded with this parameter omitted.       
         data.ifShowTestData = getRequestParamAsBoolean("testdata");
         
         
@@ -177,9 +172,8 @@ public class AdminActivityLogPageAction extends Action {
                 }
                 String logMsg = appLog.getLogMessage();
                 if (logMsg.contains("TEAMMATESLOG") && !logMsg.contains("adminActivityLogPage")) {
-                    ActivityLogEntry activityLogEntry = new ActivityLogEntry(appLog);                   
-                    activityLogEntry = data.filterLogs(activityLogEntry);
-                    if(activityLogEntry.toShow()){
+                    ActivityLogEntry activityLogEntry = new ActivityLogEntry(appLog);                
+                    if(data.filterLogs(activityLogEntry)){
                         appLogs.add(activityLogEntry);
                         currentLogsInPage ++;
                     }
@@ -191,15 +185,14 @@ public class AdminActivityLogPageAction extends Action {
         //link for Next button, will fetch older logs
         if (totalLogsSearched >= MAX_LOGSEARCH_LIMIT){
             status += "<br><span class=\"red\">&nbsp;&nbsp;Maximum amount of logs per requst have been searched.</span><br>";
-            status += "<button class=\"btn-link\" id=\"button_older\" onclick=\"submitFormAjax('" + lastOffset + "','" + data.ifShowAll + "','" + data.ifShowTestData + "');\">Search More</button>";           
+            status += "<button class=\"btn-link\" id=\"button_older\" onclick=\"submitFormAjax('" + lastOffset + "','" + data.ifShowAll + "');\">Search More</button>";           
         }
         
         if (currentLogsInPage >= LOGS_PER_PAGE) {   
-            status += "<button class=\"btn-link\" id=\"button_older\" onclick=\"submitFormAjax('" + lastOffset + "','" + data.ifShowAll + "','" + data.ifShowTestData + "');\">Older Logs </button>";              
+            status += "<button class=\"btn-link\" id=\"button_older\" onclick=\"submitFormAjax('" + lastOffset + "','" + data.ifShowAll + "');\">Older Logs </button>";              
         }
         
         status += "<input id=\"ifShowAll\" type=\"hidden\" value=\""+ data.ifShowAll +"\"/>";
-        status += "<input id=\"ifShowTestData\" type=\"hidden\" value=\""+ data.ifShowTestData +"\"/>";
         
         data.statusForAjax = status;
         statusToUser.add(status);

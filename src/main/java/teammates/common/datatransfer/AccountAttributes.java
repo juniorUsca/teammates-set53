@@ -27,7 +27,7 @@ public class AccountAttributes extends EntityAttributes {
     public Date createdAt;
     public StudentProfileAttributes studentProfile;
     
-    
+ 
     public AccountAttributes(Account a) {
         googleId = a.getGoogleId();
         name = a.getName();

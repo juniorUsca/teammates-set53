@@ -29,6 +29,7 @@ import teammates.common.datatransfer.SubmissionAttributes;
 import teammates.common.util.Const;
 import teammates.common.util.StringHelper;
 import teammates.common.util.TimeHelper;
+import teammates.logic.backdoor.BackDoorLogic;
 import teammates.logic.core.CommentsLogic;
 import teammates.logic.core.CoursesLogic;
 import teammates.logic.core.FeedbackQuestionsLogic;
@@ -1068,13 +1069,6 @@ public class AllActionsAccessControlTest extends BaseActionTest {
     public void InstructorHomePage() throws Exception{
         uri = Const.ActionURIs.INSTRUCTOR_HOME_PAGE;
         verifyOnlyInstructorsCanAccess(submissionParams);
-        
-        // check for persistence issue
-        String[] submissionParams = new String[] {
-                Const.ParamsNames.CHECK_PERSISTENCE_COURSE, "random_course"
-        };
-        
-        verifyOnlyLoggedInUsersCanAccess(submissionParams);
     }
 
     @Test
@@ -1492,12 +1486,6 @@ public class AllActionsAccessControlTest extends BaseActionTest {
         String[] submissionParams = new String[]{};
         verifyOnlyLoggedInUsersCanAccess(submissionParams);
         
-        // check for persistence issue
-        submissionParams = new String[] {
-                Const.ParamsNames.CHECK_PERSISTENCE_COURSE, "random_course"
-        };
-        
-        verifyAccessibleForUnregisteredUsers(submissionParams);
     }
     
     @Test

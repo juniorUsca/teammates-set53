@@ -37,10 +37,6 @@ public class InstructorFeedbackQuestionEditAction extends Action {
         FeedbackQuestionAttributes updatedQuestion = extractFeedbackQuestionData(requestParameters);
         try {
             if(editType.equals("edit")) {
-                String questionText = HttpRequestHelper.getValueFromParamMap(requestParameters, Const.ParamsNames.FEEDBACK_QUESTION_TEXT);
-                Assumption.assertNotNull("Null question text", questionText);
-                Assumption.assertNotEmpty("Empty question text", questionText);
-                
                 editQuestion(updatedQuestion);
             } else if (editType.equals("delete")) {
                 deleteQuestion(updatedQuestion);
@@ -55,7 +51,7 @@ public class InstructorFeedbackQuestionEditAction extends Action {
     }
 
     private void deleteQuestion(FeedbackQuestionAttributes updatedQuestion) {
-        logic.deleteFeedbackQuestionWithResponseRateCheck(updatedQuestion.getId());
+        logic.deleteFeedbackQuestion(updatedQuestion.getId());
         statusToUser.add(Const.StatusMessages.FEEDBACK_QUESTION_DELETED);
         statusToAdmin = "Feedback Question "+ updatedQuestion.questionNumber +" for session:<span class=\"bold\">(" +
                 updatedQuestion.feedbackSessionName + ")</span> for Course <span class=\"bold\">[" +
@@ -86,7 +82,7 @@ public class InstructorFeedbackQuestionEditAction extends Action {
                 statusToUser.addAll(questionDetailsErrors);
                 isError = true;
             } else {
-                logic.updateFeedbackQuestionWithResponseRateCheck(updatedQuestion);    
+                logic.updateFeedbackQuestion(updatedQuestion);    
                 statusToUser.add(Const.StatusMessages.FEEDBACK_QUESTION_EDITED);
                 statusToAdmin = "Feedback Question "+ updatedQuestion.questionNumber +" for session:<span class=\"bold\">(" +
                         updatedQuestion.feedbackSessionName + ")</span> for Course <span class=\"bold\">[" +
@@ -199,7 +195,7 @@ public class InstructorFeedbackQuestionEditAction extends Action {
         
         //Can be null
         String questionText = HttpRequestHelper.getValueFromParamMap(requestParameters, Const.ParamsNames.FEEDBACK_QUESTION_TEXT);
-        if (questionText != null && !questionText.isEmpty()) {
+        if (questionText != null) {
             FeedbackAbstractQuestionDetails questionDetails = 
                     FeedbackAbstractQuestionDetails.createQuestionDetails(requestParameters, newQuestion.questionType);
             newQuestion.setQuestionDetails(questionDetails);
